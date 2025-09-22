@@ -1,0 +1,22 @@
+[
+    {
+        "name":"User1",
+        "email":"user1@gmail.com",
+        "mobile_number":"7675675649",
+        "dob":"2-03-2003",
+        "address":"South street,Town"
+    },
+    {
+        "name":"User2",
+        "email":"user2@gmail.com",
+        "mobile_number":"7675665649",
+        "dob":"25-03-2000",
+        "address":"2/456,OP,Trichi"
+    },{
+        "name":"User3",
+        "email":"user3@gmail.com",
+        "mobile_number":"7634675649",
+        "dob":"17-07-2005",
+        "address":"Sri Road,Rajapalayam"
+    }
+]

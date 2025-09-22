@@ -1,0 +1,11 @@
+import { Navigate, Outlet } from 'react-router-dom'
+
+const ProtectedRoute = () => {
+    const isLogged = !!localStorage.getItem('webtoken')
+
+  return (
+    isLogged ? <Outlet /> : <Navigate to='/login' />
+  )
+}
+
+export default ProtectedRoute

@@ -1,0 +1,74 @@
+[
+    {
+        "name": "Home Temple",
+        "desc": "40% Off",
+        "rate": 6000,
+        "img": "Temple.webp"
+    },
+    {
+        "name": "Air Freshener",
+        "desc": "40% Off",
+        "rate": 300,
+        "img": "fresh.jpg"
+    },
+    {
+        "name": "Helmet",
+        "desc": "40% Off",
+        "rate": 899,
+        "img": "helmet.webp"
+    },
+    {
+        "name": "Hoodie",
+        "desc": "20% Off",
+        "rate": 399,
+        "img": "hoodie.webp"
+    },
+    {
+        "name": "Hair Dryer",
+        "desc": "15% Off",
+        "rate": 1999,
+        "img": "dryer.webp"
+    },
+    {
+        "name": "Instax Camera",
+        "desc": "40% Off",
+        "rate": 2400,
+        "img": "instax-camera.webp"
+    },
+    {
+        "name": "Locket",
+        "desc": "30% Off",
+        "rate": 650,
+        "img": "locket.jpg"
+    },
+    {
+        "name": "Rice",
+        "desc": "10% Off",
+        "rate": 400,
+        "img": "rice.webp"
+    },
+    {
+        "name": "Shoe",
+        "desc": "20% Off",
+        "rate": 700,
+        "img": "shoe.webp"
+    },
+    {
+        "name": "Apple Ipad",
+        "desc": "30% Off",
+        "rate": 55000,
+        "img": "tab.webp"
+    },
+    {
+        "name": "Trolley",
+        "desc": "20% Off",
+        "rate": 5000,
+        "img": "trolley.webp"
+    },
+    {
+        "name": "Wardrobe",
+        "desc": "50% Off",
+        "rate": 7090,
+        "img": "wardrobes.webp"
+    }
+]
