@@ -1,41 +1,42 @@
 // import React from 'react'
-import Img3 from '../../../assets/Category/Camera.webp'
-import Img2 from '../../../assets/Category/Headphones.webp'
-import Img1 from '../../../assets/Category/Monitor.webp'
-import Img5 from '../../../assets/Category/Projector.webp'
-import Img4 from '../../../assets/Category/Speaker.webp'
-// import Category from './Category'
-import DtCategory from './DtCategory'
+import { useEffect, useState } from 'react'
+import Category from './Category'
+import { getCategories } from '../../../api'
+import CategoryPage from './CategoryPage'
+// import DtCategory from './DtCategory'
 
 const CategoryList : React.FC = () => {
 
-  const topProducts  = [
-        {
-            name:'Monitors',
-            img:Img1,
-            rate:6500
-        },
-        {
-            name:'Wireless Headphones',
-            img:Img2,
-            rate:899
-        },
-        {
-            name:'Camera',
-            img:Img3,
-            rate:999
-        },{
-            name:'Mobile Speaker',
-            img:Img4,
-            rate:499
-        },{
-            name:'Projector',
-            img:Img5,
-            rate:6990
-        },
-    ];
+  const [cat,setCat] = useState([])
+
+  const getLoc = location.pathname === '/categories'
+
+    // call func
+      useEffect(() => {
+        getCat()
+      },[])
+  
+      // fetch cat from api
+      const getCat = async() => {
+          try{
+              const result = await getCategories();
+              // const result =  await prd.json();
+              setCat(result);
+          }
+          catch(e){
+              console.error('Error Messsage is',e);
+              setCat([])
+          }
+      }
+
   return (
-    <DtCategory topProducts={topProducts}/>
+    // <DtCategory topProducts={topProducts}/>
+    <>
+    {getLoc ? 
+      <CategoryPage cat={cat}/> :
+      <Category topProducts={cat}/>
+    }
+    </>
   )
 }
 

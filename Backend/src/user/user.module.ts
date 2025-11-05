@@ -7,8 +7,6 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { JwtGuard } from './auth/jwt-auth.guard';
-import { RefreshToken, RefreshTokenSchema } from 'src/schemas/RefreshToken.schema';
-import { RefreshTokenService } from './auth/refresh-token/refresh-token.service';
 
 @Module({
   imports : [
@@ -23,14 +21,11 @@ import { RefreshTokenService } from './auth/refresh-token/refresh-token.service'
       {
         name: User.name,
         schema : UserSchema
-      },{
-        name: RefreshToken.name,
-        schema : RefreshTokenSchema
       }
 
     ]),
   ],
   controllers: [UserController],
-  providers : [UserService,RefreshTokenService,JwtStrategy]
+  providers : [UserService,JwtStrategy]
 })
 export class UserModule {}

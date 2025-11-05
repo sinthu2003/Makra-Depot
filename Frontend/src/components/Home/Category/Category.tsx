@@ -1,52 +1,30 @@
-// import React from 'react'
-import Img3 from '../../assets/Category/Camera.webp'
-import Img2 from '../../assets/Category/Headphones.webp'
-import Img1 from '../../assets/Category/Monitor.webp'
-import Img5 from '../../assets/Category/Projector.webp'
-import Img4 from '../../assets/Category/Speaker.webp'
+import { useNavigate } from "react-router-dom"
 
-const Category = () => {
-    const topProducts = [
-        {
-            name:'Monitors',
-            img:Img1,
-            rate:'6500'
-        },
-        {
-            name:'Wireless Headphones',
-            img:Img2,
-            rate:'899'
-        },
-        {
-            name:'Camera',
-            img:Img3,
-            rate:'999'
-        },{
-            name:'Mobile Speaker',
-            img:Img4,
-            rate:'499'
-        },{
-            name:'Projector',
-            img:Img5,
-            rate:'6990'
-        },
-    ];
+const Category = ({topProducts} : any) => {
+    
+  const nav = useNavigate()
+  
+    const goTo=async(slug : string) => {
+      nav('/products',{state:{categorySlug : slug}})
+    }
+
   return (
-    <div className='m-5 gap-10 p-10'>
+    <div className='m-5 gap-10 px-5'>
         {/* head */}
-        <div className='align-center justify-center flex'>
-            <h1 className='font-bold'>BEST OF ELECTRONICS</h1>
+        <div className='items-center justify-center flex flex-col'>
+          <h1 className='font-bold text-3xl dark:text-white'>Shop By Category</h1>
+          <div className="h-[3px] w-1/16 mx-auto mt-2 bg-[#d5754d]"></div>
+          <p className='mt-3 font-semibold dark:text-white/80'>Find the perfect fireworks for your celebration</p>
         </div>
         {/* products */}
-        <div className="m-4">
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                {topProducts.map((prd,index) => (
-                <li key={index} className="bg-white rounded-lg shadow-md border-3 border-[#fff9e6] hover:border-[#d5754d] hover:cursor-pointer transition-all p-4 flex flex-col items-center">
-                    <div className="w-full h-40 flex items-center justify-center mb-4">
-                        <img src={prd.img} className="w-4/5 max-w-[120px] h-40"/>
-                    </div>
-                    <p className="font-semibold text-center text-sm sm:text-base">{prd.name}</p>
-                    <p className="text-gray-900 text-sm text-center mt-1">From ₹{prd.rate}</p>
+
+        <div className="m-4 mt-10">
+            <ul className="grid grid-cols-6 gap-4">
+                {topProducts.filter(item => item.productCount>10).slice(0,6).map((prd,index) => (
+                <li key={index} className="bg-white dark:bg-gray-900 rounded-xl shadow-md dark:shadow-[#ffb684]/20 border-1 group border-[#d5754d] hover:border-[#d5754d] hover:cursor-pointer transition p-4 flex flex-col items-center hover:-translate-y-2 duration-400 hover:shadow-2xl" onClick={()=>goTo(prd.slug)}>
+                    <p className="font-bold text-center text-sm group-hover:text-[#d5754d] dark:text-white">{prd.name}</p>
+                    <p className="text-gray-500 text-xs font-semibold text-center mt-1 flex gap-1">{prd.productCount}
+                        <span>Products</span></p>
                 </li>
                 ))}
             </ul>

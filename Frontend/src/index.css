@@ -1,1 +1,38 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* font family */
+@theme {
+      --font-inter: 'Inter', sans-serif;
+    }
+
+.font-inter {
+          font-family: var(--font-inter);
+        }
+
+.custom-swiper .swiper-button-prev,
+.custom-swiper .swiper-button-next {
+  color: white !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.custom-swiper .swiper-pagination-bullet {
+  background-color: white !important;
+  opacity: 0.7;
+  width:5px;
+  height:5px;
+  border-radius: 9999px; /* full round */
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-swiper .swiper-pagination-bullet-active {
+  background-color: #d5754d !important;
+  opacity: 1;
+  width: 24px; 
+  border-radius: 8px; 
+}

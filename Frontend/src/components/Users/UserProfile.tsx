@@ -1,75 +1,135 @@
 import { useEffect, useState } from 'react'
-import { userData } from '../../api'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { FaRegCalendar, FaShieldAlt, FaTransgender, FaUser } from 'react-icons/fa'
+import { userDetails } from '../../api'
+import { GoHeartFill, GoSignOut } from 'react-icons/go'
+import { MdMail, MdOutlineLocalPhone, MdOutlinePayment, MdShoppingCart } from 'react-icons/md'
+import { RiBuilding2Line } from 'react-icons/ri'
+import { PiHandCoinsBold, PiPackageBold } from 'react-icons/pi'
 
 const UserProfile = () => {
 
-    const [user,setUser] = useState([])
+    const [user,setUser] = useState()
 
     const nav = useNavigate()
     
     useEffect(() => {
-        const getUserData = async() => {
-            const res = await userData()
-            if(res?.status === 200 || res?.status === 201){
-                setUser(res.data)
-            }
-            else{
-                nav('/login')
-            }
-        }
-        getUserData()
+       getData()
     },[])
 
+    const getData= async() => {
+      try{
+          const response = await userDetails()
+          if (response?.status === 200 || response?.status === 201) {
+            setUser(response.data.data)
+          }
+      }
+      catch(e){
+          console.log(e)
+      }
+    }
+
     // logout
-    const logout = async() => {
+    const SignOut = async() => {
         localStorage.removeItem('webtoken')
-        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('user')
+        localStorage.removeItem('cart')
+        localStorage.removeItem('wish')
         nav('/')
     }
 
     return (
-<>
-  <div className="flex justify-center items-center min-h-screen ">
-    <div className="shadow-xl rounded-lg bg-white border border-[#f0c2a2] p-10 w-full max-w-md">
-      <h1 className="text-center font-bold text-2xl text-[#d5754d] mb-6">USER PROFILE</h1>
-
-      <div className="space-y-4 text-sm">
-        {/* Name */}
-        <div>
-          <label className="font-medium text-gray-600">Name</label>
-          <p className="text-gray-800 font-semibold">{user.name}</p>
+    <>
+      <div className="flex flex-col py-20 w-[60%] gap-5 mx-auto">
+        {/* user card */}
+        <div className='bg-[#d5754d] px-12 py-6 flex rounded-md items-center gap-4'>
+            <div className='bg-[#ffb684] p-6 rounded-full'>
+              <FaUser className='size-8'/>
+            </div>
+            {/* details */}
+            <div className='flex flex-col gap-1'>
+                <p className='font-bold text-lg'>{user?.name}</p>
+                <p className='text-sm'>{user?.email}</p>
+                <p className='text-sm'>Member since {new Date(user?.createdAt).toLocaleDateString('en-GB')}</p>
+            </div>
         </div>
 
-        {/* Email */}
-        <div>
-          <label className="font-medium text-gray-600">Email</label>
-          <p className="text-gray-800">{user.email}</p>
+        {/* count */}
+        <div className='flex gap-4 justify-between dark:text-white'>
+            <div className='py-4 px-10 border border-[#d5754d]/60 shadow rounded-lg flex items-center gap-8'>
+              <p className='text-md flex flex-col'>Total Orders<span className='font-bold text-xl'>{user?.totalOrders}</span></p>
+              <PiPackageBold  className='size-8 text-[#d5754d]'/>
+            </div>
+            <div className='py-4 px-10 border border-[#d5754d]/60 shadow rounded-lg flex items-center gap-8'>
+              <p className='text-md flex flex-col'>Total Spent<span className='font-bold text-xl'>{user?.totalSpent}</span></p>
+              <PiHandCoinsBold  className='size-8 text-[#d5754d]'/>
+            </div>
+            <div className='py-4 px-10 border border-[#d5754d]/60 shadow rounded-lg flex items-center gap-8'>
+              <p className='text-md flex flex-col'>Wishlist Items<span className='font-bold text-xl'>{user?.wishlist.length}</span></p>
+              <GoHeartFill className='size-8 text-[#d5754d]'/>
+            </div>
         </div>
 
-        {/* Mobile */}
-        <div>
-          <label className="font-medium text-gray-600">Mobile Number</label>
-          <p className="text-gray-800">{user.mobile_number}</p>
+        {/* form */}
+        <div className='border border-[#d5754d]/60 shadow rounded-lg py-4 px-8 flex flex-col gap-4 dark:text-white'>
+            <p className='border-b border-[#d5754d]/30 font-medium'>Personal Info</p>
+            <form>
+                <div className='flex flex-col gap-2 w-full'>
+                    <label className='font-medium text-sm flex gap-1 items-center'><FaUser className='size-3'/> Name</label>
+                    <input type="name" id="name" className='px-4 py-2 outline-none bg-gray-200/90 dark:bg-black rounded-lg px-4 font-semibold text-sm' value={user?.name}/>
+                </div>
+                <div className='grid grid-cols-2 my-3 gap-3'>
+                    <div className='flex flex-col gap-2'>
+                      <label className='font-medium text-sm flex gap-1 items-center'><MdMail className='size-3'/>Email</label>
+                        <input type="email" id="email" className='px-4 py-2 outline-none bg-gray-200/90 rounded-lg px-4 font-semibold text-sm dark:bg-black' value={user?.email}/>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label className='font-medium text-sm flex gap-1 items-center'><FaRegCalendar className='size-3'/>Date of Birth</label>
+                        <input type="date" className='px-4 py-2 outline-none bg-gray-200/90 dark:bg-black rounded-lg px-4 font-semibold text-sm' id="dateOfBirth" value={user?.dateOfBirth}/>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label className='font-medium text-sm flex gap-1 items-center'><FaTransgender className='size-3'/>Gender</label>
+                        <select className='px-4 py-2 outline-none bg-gray-200/90 rounded-lg px-4 font-semibold text-sm dark:bg-black' id="gender" defaultValue="" disabled>
+                          <option value="">Other</option>
+                        </select>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label className='font-medium text-sm flex gap-1 items-center'><MdOutlinePayment className='size-3'/>Preferred Payment Method</label>
+                        <input type="text" className='px-4 py-2 outline-none bg-gray-200/90 dark:bg-black rounded-lg px-4 font-semibold text-sm' id="tier" value={user?.preferredPaymentMethod}/>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label className='font-medium text-sm flex gap-1 items-center'><MdOutlineLocalPhone className='size-3'/>Primary Phone</label>
+                        <input type="text" className='px-4 py-2 outline-none bg-gray-200/90 dark:bg-black rounded-lg px-4 font-semibold text-sm' id="tier" value={user?.phone}/>
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label className='font-medium text-sm flex gap-1 items-center'><MdOutlineLocalPhone className='size-3'/>Whatsapp Number</label>
+                        <input type="text" className='px-4 py-2 outline-none bg-gray-200/90 dark:bg-black rounded-lg px-4 font-semibold text-sm' id="tier" value={user?.phone}/>
+                    </div>
+                </div>
+                {user?.shippingAddresses?.length > 0 && 
+                <div className='flex flex-col gap-2 w-full'>
+                    <label className='font-medium text-sm flex gap-1 items-center'><RiBuilding2Line className='size-3'/> Addresses</label>
+                    {user?.shippingAddresses.map((add,index)=> (
+                      // <input type="name" id="name" className='px-4 py-2 outline-none bg-gray-200/90 rounded-lg px-4 font-semibold text-sm' value={add.street}/>
+                      <div className='px-4 py-2 outline-none bg-gray-200/90 dark:bg-black rounded-lg px-4 font-semibold text-sm flex flex-col gap-1' key={index}>
+                        {add.isDefault && <p className='text-xs p-1 bg-black/40 text-white inline-block rounded-lg w-fit'>Default</p>}
+                        <p className='text-xs'>{add.street},{add.city}</p>
+                        <p className='text-xs'>{add.state}- {add.zipCode}</p>
+                      </div>
+                    ))}
+                </div> }
+            </form>
         </div>
 
-        {/* Address */}
-        <div>
-          <label className="font-medium text-gray-600">Address</label>
-          <p className="text-gray-800">{user.address}</p>
+        {/* action */}
+        <div className='flex justify-between w-full gap-4 grid grid-cols-2 dark:text-white'>
+          <button className='w-full px-10 py-2 flex gap-1 justify-center items-center border border-[#d5754d] hover:bg-[#d5754d] rounded-lg shadowfont-semibold hover:-translate-y-1 cursor-pointer transition duration-300 hover:shadow-2xl dark:hover:text-black'><PiPackageBold /><Link to="/orders">My Orders</Link></button>
+          <button className='w-full px-10 py-2 flex gap-2 justify-center items-center border border-[#d5754d] bg-[#d5754d] rounded-lg shadowfont-semibold hover:-translate-y-1 cursor-pointer transition duration-300 hover:shadow-2xl dark:text-black'><GoHeartFill/><Link to="/wishlist">My Wishlist</Link></button>
+          <button className='w-full px-10 py-2 flex gap-2 justify-center items-center border border-[#d5754d] bg-[#d5754d] rounded-lg shadowfont-semibold hover:-translate-y-1 cursor-pointer transition duration-300 hover:shadow-2xl dark:text-black'><MdShoppingCart className='size-5'/><Link to="/cart">My Cart</Link></button>
+          <button className='w-full px-10 py-2 flex gap-2 justify-center items-center hover:bg-red-500/90 border border-[#d5754d] shadow rounded-lg font-semibold hover:-translate-y-1 cursor-pointer transition duration-300 hover:shadow-2xl dark:hover:text-black' onClick={()=>SignOut()}><GoSignOut /> Sign out</button>
         </div>
-
       </div>
-
-      {/* =Logout */}
-      <div className="mt-6 flex gap-4">
-        <button className="w-1/2 py-2 mx-auto rounded-full bg-gray-200 hover:bg-gray-300 text-black font-bold shadow-md transition duration-300 hover:cursor-pointer" onClick={logout}>
-          Logout
-        </button>
-      </div>
-    </div>
-  </div>
-</>
+    </>
 
     )
 }

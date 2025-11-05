@@ -1,0 +1,27 @@
+{
+"_id":"4fa2a0a1-2af4-4e7c-8d2e-2dae4b7bbd1f",
+  "id": "4fa2a0a1-2af4-4e7c-8d2e-2dae4b7bbd1f",
+  "name": "Devi",
+  "email": "devi@example.com",
+  "phone": "9159033645",
+  "tier": "bronze",
+  "totalOrders": 0,
+  "totalSpent": 0,
+  "shippingAddresses": [
+    {
+      "street": "123 Main Street",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "zipCode": "400001",
+      "country": "India",
+      "id": "addr-123",
+      "label": "Home",
+      "isDefault": true
+    }
+  ],
+  "status": "active",
+  "emailVerified": true,
+  "phoneVerified": true,
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-20T15:45:00.000Z"
+}

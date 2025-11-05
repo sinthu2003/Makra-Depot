@@ -1,4 +1,5 @@
 // import React from 'react'
+import { Link } from 'react-router-dom'
 import img from '../../../assets/mainImg.png'
 const Main = () => {
 
@@ -16,7 +17,7 @@ const Main = () => {
                     <div className='text-center flex flex-col items-center lg:text-left px-4 sm:px-8'>
                         <h1 className='text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2'>Shop Smarter, Live Better</h1>
                         <h1 className='text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 whitespace-nowrap'>Join Millions of Happy Shoppers</h1>
-                        <button type='button' className='py-2 px-6 sm:px-8 rounded-full bg-[#ffb684] hover:bg-[#d5754d] hover:cursor-pointer font-bold shadow-lg transition duration-300'>Shop Now </button>
+                        <Link to='/products'><button type='button' className='py-2 px-6 sm:px-8 rounded-full bg-[#ffb684] hover:bg-[#d5754d] hover:cursor-pointer font-bold shadow-lg transition duration-300'>Shop Now </button></Link>
                     </div>
                 </div>
             </div>

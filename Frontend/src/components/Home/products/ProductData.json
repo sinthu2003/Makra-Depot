@@ -1,74 +1,229 @@
 [
     {
         "name": "Home Temple",
-        "desc": "40% Off",
+        "discount": 40,
+        "desc":"Rousrie Wooden Temple Mandir for Home with Door Cabinets | Beautiful Pooja Unit with Storage Space | with LED Light and Wall Mounts",
         "rate": 6000,
-        "img": "Temple.webp"
+        "stock":false,
+        "section":"decor",
+        "shipping_days":5,
+        "img": "Temple.webp",
+        "createdAt" :"2025-09-29T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-29T11:49:15.132+00:00"
+    },
+    {
+        "name": "Stainless Steel Water Bottle",
+        "desc":"PEXPO Craft Pro 1000 ISI Certified Stainless Steel Sports/Fridge Water Bottle with Sipper Cap - 950ml",
+        "rate": 999,
+        "new": true,
+        "stock":true,
+        "shipping_days":2,
+        "img": "Bottle.jpg",
+        "createdAt" :"2025-09-31T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-31T11:49:15.132+00:00"
     },
     {
         "name": "Air Freshener",
-        "desc": "40% Off",
         "rate": 300,
-        "img": "fresh.jpg"
+        "desc":"Godrej aer Plug Electric Air Freshener (Machine + 2 Refills (20Ml each) | Violet Bloom | Lasts up to 120 days,Solid",
+        "stock":true,
+        "section":"decor",
+        "shipping_days":3,
+        "img": "fresh.jpg",
+        "createdAt" :"2025-08-10T11:49:15.132+00:00",
+        "updatedAt" :"2025-08-10T11:49:15.132+00:00"
     },
     {
         "name": "Helmet",
-        "desc": "40% Off",
+        "desc":"TVS Cruisetown Open Face Helmet Half Face Helmet for Riders | ISI & DOT Certified | Premium Protection for Men & Women | Comfortable, Durable & Lightweight Design with Visor",
         "rate": 899,
-        "img": "helmet.webp"
+        "stock":true,
+        "shipping_days":2,
+        "img": "helmet.webp",
+        "createdAt" :"2025-09-19T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-29T11:49:15.132+00:00"
     },
     {
         "name": "Hoodie",
-        "desc": "20% Off",
+        "discount": 10,
+        "desc":"ADRO Hoodies for Men | Printed Hoodie for Men | Cotton Hoodie | Mens Hoodies | Sweatshirt for Men | Hooded Hoodie",
         "rate": 399,
-        "img": "hoodie.webp"
+        "stock":true,
+        "section":"men-kids",
+        "shipping_days":7,
+        "img": "hoodie.webp",
+        "createdAt" :"2025-08-09T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-05T11:49:15.132+00:00"
+    },
+    {
+        "name": "Minimalist Alpha Arbutin Serum",
+        "desc":"Minimalist Dark Spots Removal Serum with 2% Alpha Arbutin for Hyperpigmentation | Suitable for All Skin Type | Face Serum for Blemishes, Acne Marks",
+        "rate": 400,
+        "new": true,
+        "stock":true,
+        "section":"women",
+        "shipping_days":6,
+        "img": "serum.jpg",
+        "createdAt" :"2025-10-07T11:49:15.132+00:00",
+        "updatedAt" :"2025-10-07T11:49:15.132+00:00"
     },
     {
         "name": "Hair Dryer",
-        "desc": "15% Off",
+        "desc":"Philips Hair Dryer 1000 Watts | Perfect Blow Dry For Women | 2 Heat Settings",
         "rate": 1999,
-        "img": "dryer.webp"
+        "stock":false,
+        "shipping_days":4,
+        "section":"women",
+        "img": "dryer.webp",
+        "createdAt" :"2025-07-10T11:49:15.132+00:00",
+        "updatedAt" :"2025-07-10T11:49:15.132+00:00"
     },
     {
         "name": "Instax Camera",
-        "desc": "40% Off",
+        "discount": 5,
+        "desc":"Fujifilm Instax Mini 12 Instant Camera-Blue",
         "rate": 2400,
-        "img": "instax-camera.webp"
+        "stock":false,
+        "shipping_days":3,
+        "img": "instax-camera.webp",
+        "createdAt" :"2025-09-17T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-17T11:49:15.132+00:00"
     },
     {
         "name": "Locket",
-        "desc": "30% Off",
+        "desc":"Via Mazzini 18K Real Gold Plated Memory Locket Pendant Necklace",
         "rate": 650,
-        "img": "locket.jpg"
+        "stock":true,
+        "shipping_days":1,
+        "section":"women",
+        "img": "locket.jpg",
+        "createdAt" :"2025-09-01T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-01T11:49:15.132+00:00"
     },
     {
         "name": "Rice",
-        "desc": "10% Off",
+        "desc":"Daawat Rozana Super Basmati Rice 5Kg| For Everyday Consumption| Cooked Grain",
         "rate": 400,
-        "img": "rice.webp"
+        "stock":true,
+        "shipping_days":2,
+        "section":"decor",
+        "img": "rice.webp",
+        "createdAt" :"2025-08-06T11:49:15.132+00:00",
+        "updatedAt" :"2025-08-06T11:49:15.132+00:00"
+    },
+    {
+        "name": "Led Warm String Lights",
+        "discount": 15,
+        "desc":"One94Store Crystal Ball String Lights – 14 LED, 3 Meter Warm White – Decorative Waterproof Fairy Lights for Indoor/Outdoor, Garden, Diwali, Christmas",
+        "rate": 1500,
+        "new": true,
+        "stock":true,
+        "section":"decor",
+        "shipping_days":3,
+        "img": "Led.jpg",
+        "createdAt" :"2025-10-05T11:49:15.132+00:00",
+        "updatedAt" :"2025-10-05T11:49:15.132+00:00"
     },
     {
         "name": "Shoe",
-        "desc": "20% Off",
+        "desc":"ASIAN Women's Melody-71 Casual Loafer,Sneaker & Moccasins Shoes with Lightweight Extra Cushion Slip-On Casual Sneaker Shoes",
         "rate": 700,
-        "img": "shoe.webp"
+        "stock":true,
+        "shipping_days":4,
+        "section":"women",
+        "img": "shoe.jpg",
+        "createdAt" :"2025-09-02T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-02T11:49:15.132+00:00"
     },
     {
         "name": "Apple Ipad",
-        "desc": "30% Off",
+        "discount": 20,
+        "desc":"Apple iPad (10th Generation): with A14 Bionic chip, 27.69 cm (10.9″) Liquid Retina Display, 64GB, Wi-Fi 6, 12MP front/12MP Back Camera, Touch ID, All-Day Battery Life – Pink",
         "rate": 55000,
-        "img": "tab.webp"
+        "stock":false,
+        "shipping_days":4,
+        "img": "tab.webp",
+        "createdAt" :"2025-09-02T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-02T11:49:15.132+00:00"
     },
     {
         "name": "Trolley",
-        "desc": "20% Off",
+        "discount": 10,
+        "desc":"American Tourister Large Liftoff+ with TSA Lock & 8 Wheel, 79 CM Hard PP Check-in Suitcase for Travel",
         "rate": 5000,
-        "img": "trolley.webp"
+        "stock":true,
+        "shipping_days":5,
+        "img": "trolley.webp",
+        "createdAt" :"2025-09-04T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-06T11:49:15.132+00:00"
+    },
+    {
+        "name": "The Power of Subconsious Mind",
+        "desc":"The Power of Your Subconscious Mind: Original Classic Edition | Premium Paperback",
+        "rate": 100,
+        "new": true,
+        "stock":true,
+        "shipping_days":2,
+        "img": "book.jpg",
+        "createdAt" :"2025-10-01T11:49:15.132+00:00",
+        "updatedAt" :"2025-10-01T11:49:15.132+00:00"
     },
     {
         "name": "Wardrobe",
-        "desc": "50% Off",
+        "desc":"Maison & Cuisine Polypropylene Collapsible Wardrobe 12 Shelves Storage Unit, Quick and Easy to Assemble Foldable Almirah(W 88170)(Brown)",
         "rate": 7090,
-        "img": "wardrobes.webp"
+        "stock":false,
+        "shipping_days":3,
+        "section":"decor",
+        "img": "wardrobes.webp",
+        "createdAt" :"2025-09-30T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-30T11:49:15.132+00:00"
+    },
+    {
+        "name": "Sitting Buddha Statue",
+        "discount": 80,
+        "desc":"Global Grabbers New 25 Centimetre Meditating Sitting Buddha Statue showpiece Idol Home Decor Items for Living Room and Gifts (1, Orange Black)",
+        "rate": 2000,
+        "stock":true,
+        "shipping_days":3,
+        "section":"decor",
+        "img": "Buddha.webp",
+        "createdAt" :"2025-09-11T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-11T11:49:15.132+00:00"
+    },
+    {
+        "name": "Rose Quartz Crystal Tree",
+        "desc":"Gesto Plastic Bonsai Trees Lamp, Diy Artificial Tree Lamp With 36 Pearls Led,Touch Switch,Fairy Light Spirit Powered By Usb",
+        "rate": 2995,
+        "discount":38,
+        "stock":true,
+        "shipping_days":2,
+        "section":"decor",
+        "img": "Tree.webp",
+        "createdAt" :"2025-09-31T15:49:15.132+00:00",
+        "updatedAt" :"2025-09-31T15:49:15.132+00:00"
+    },
+    {
+        "name": "Smart Wi-Fi Security Camera",
+        "desc":"Tapo C200 360° 2MP 1080p Full HD Pan/Tilt Home Security Wi-Fi Smart Camera| Alexa Enabled",
+        "rate": 4499,
+        "stock":false,
+        "discount":58,
+        "shipping_days":3,
+        "section":"decor",
+        "img": "Cctv.jpg",
+        "createdAt" :"2025-07-10T11:49:15.132+00:00",
+        "updatedAt" :"2025-07-10T11:49:15.132+00:00"
+    },
+    {
+        "name": "Antique Neclace",
+        "desc":"Jewellery Set for Women Gold Plated Traditional Temple Jewelry Set Antique Necklace Set with Earrings",
+        "rate": 2490,
+        "stock":true,
+        "shipping_days":6,
+        "section":"women",
+        "img": "necklace.webp",
+        "createdAt" :"2025-09-15T11:49:15.132+00:00",
+        "updatedAt" :"2025-09-15T11:49:15.132+00:00"
     }
 ]

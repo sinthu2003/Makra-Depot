@@ -4,7 +4,7 @@ const ProtectedRoute = () => {
     const isLogged = !!localStorage.getItem('webtoken')
 
   return (
-    isLogged ? <Outlet /> : <Navigate to='/login' />
+    isLogged ? <Outlet /> : <Navigate to='/login' replace/>
   )
 }
 

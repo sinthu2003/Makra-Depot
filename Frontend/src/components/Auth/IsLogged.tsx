@@ -4,7 +4,7 @@ const IsLogged = () => {
   const isLogged = !!localStorage.getItem('webtoken')
 
   return (
-    isLogged  ? <Navigate to='/' /> : <Outlet /> 
+    isLogged  ? <Navigate to='/' replace/> : <Outlet /> 
   )
 }
 

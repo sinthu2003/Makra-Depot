@@ -1,24 +1,29 @@
 // import Category from "../category/Category"
 import CategoryList from "./Category/CategoryList"
 // import DtCategory from "../category/DtCategory"
-import Footer from "../Footer/Footer"
-import Main from "./Main/Main"
-import ProductList from "./products/ProductList"
+import NewArrivalList from "./New Arrival/NewArrivalList"
+import Slider from "./Main/Slider"
+import FeatureList from "./Featured/FeatureList"
+import Banner from "./Featured/Banner"
 // import Products from "./products/Products"
 
 const Home = () => {
   return (
     <>
         {/* main */}
-        <Main />
+        <Slider/>
 
+        {/* New Arrival */}
+        <NewArrivalList />
+        
         {/* Category */}
         <CategoryList />
 
-        {/* All Products */}
-        <ProductList />
-        {/* Footer */}
-        <Footer />
+        {/* Feat Products */}
+        <FeatureList/>
+
+        {/* banner */}
+        <Banner/>
     </>
   )
 }

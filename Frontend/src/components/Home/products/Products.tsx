@@ -1,208 +1,512 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { HiMinus, HiPlus } from 'react-icons/hi'
+import { useContext, useEffect, useState } from 'react'
+import { HiMinus, HiOutlineHeart, HiPlus, HiShoppingCart } from 'react-icons/hi'
 import { MdOutlineDelete } from 'react-icons/md';
-import { addOneQuan, addWishList, createCartItem, getCart, getProducts, getWishList, minusOneQuan, removeCartItem, updateWishList } from '../../../api';
-import { HiMiniHeart, HiOutlineHeart } from 'react-icons/hi2';
+import { brandCatFilter, brandFilter, catFilter, newCart, updateWishList} from '../../../api';
+import { HiMiniHeart } from 'react-icons/hi2';
 import { BiLoaderCircle } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { CiStar } from 'react-icons/ci';
+import { FaStar } from 'react-icons/fa';
+import { IoMdCart } from 'react-icons/io';
+import { CountContext } from '../../Navbar/CountContext';
 
-const Products = ({ products,cart,wish }) => {
+const Products = ({ products,cart,wish,cat,brands,isProductLoading}) => {
   const [localProducts, setLocalProducts] = useState(products);
-  const [localCart,setLocalCart] = useState(cart)
+  const [localCart,setLocalCart] = useState([])
   const [localWish,setLocalWish] = useState(wish)
+  const [categories,setCategories] = useState(cat)
+  const [localBrands,setLocalBrands] = useState(brands)
   const [loadingIds, setLoadingIds] = useState([]); //loads until api fetches data
   const [isLogged,setIsLogged] = useState(false)
+  const [defaultOption,setDefaultOption] = useState("featured")
+  const [defaultCat,setDefaultCat] = useState("")
+  const [defaultBrand,setDefaultBrand] = useState("")
 
   // nav
   const nav = useNavigate()
+  const loc = useLocation()
+  const categorySlug = loc.state?.categorySlug
+  const brandName = loc.state?.brandName
+  const newArrival = loc.state?.newArrival
+  const { setCartCount,setWishCount } = useContext(CountContext);
+
 
   // render after await prd fetched
   useEffect(() => {
     setLocalProducts(products);
-    setLocalCart(cart)
-    setLocalWish(wish)
+    setLocalCart(loadCart)
+    setLocalWish(loadWish) 
+    setLocalBrands(brands)
+    setCategories(cat)
     setIsLogged(!!localStorage.getItem('webtoken'))
-  }, [products,cart,wish]);
-
-  // quantity
-  const quantity = (prd : any) => {
-    const getCart = localCart?.find( (item : any) => item.product_id._id == prd._id);
-    return getCart? getCart.quantity : 0
-  }
-
-  //remove from cart get cart id 
-  const removeFromCart = async (prd : any) => {
-      try{
-        const res = await removeCartItem(prd._id)
-        if (res?.status === 200 || res?.status === 201) {  //deltd cart using prd id
-          setLocalCart(await getCart())
-        }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoadingIds(prev => prev.filter(id => id !== prd._id));
-      }
-  }
-
-  // create cart
-  const addToCart = async (prd : any) => {
-
-    if(isLogged){
-      setLoadingIds(prev => [...prev, prd._id]);
-
-      try {
-        const response = await createCartItem(prd._id)
-        if (response?.status === 200 || response?.status === 201) {  // cart created and product status changed
-            // setLocalProducts(prev =>
-            //   prev.map(p =>
-            //     p._id === prd._id ? { ...p, added: true } : p
-            //   )
-            // );
-            setLocalCart(await getCart())
-          }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoadingIds(prev => prev.filter(id => id !== prd._id));
-      }
+    setDefaultOption("featured")
+    if(categorySlug){
+      showCat(categorySlug)
+      setDefaultCat(categorySlug)
     }
-    else{
-      nav('/login')
+    if(brandName){
+      showBrand(brandName)
+      setDefaultBrand(brandName)
     }
-  }
-  
+
+    if(newArrival){
+      setDefaultOption('new')
+    }
+  }, [products,cart,wish,categorySlug,brandName,newArrival,isProductLoading]);
+
   const isLoading = (id : string) => {
     return loadingIds.includes(id);
   }
 
-  //  addOne
-  const addOne = async(prd : any) => {
-    const res = await addOneQuan(prd)
-    if(res.status === 200 || res.status === 201) {
-      const cartdata = await getCart()
-      return setLocalCart(cartdata)
+  const loadCart = () => {
+    try {
+      return JSON.parse(localStorage.getItem('cart') || '[]')
+    } catch {
+      return []
     }
   }
 
-  // minusOne
-  const minusOne = async(prd : any) => {
-    const res =await minusOneQuan(prd)
-    if(res.status === 200 || res.status === 201) {
-      const cartdata = await getCart()
-      return setLocalCart(cartdata)
+  const loadWish = () => {
+          try {
+            return JSON.parse(localStorage.getItem('wish') || '[]')
+          } catch {
+            return []
+          }
+        }
+
+  const saveCart = (cartData) => {
+    localStorage.setItem('cart', JSON.stringify(cartData))
+    setLocalCart([...cartData])
+    setCartCount(cartData.length)
+    newCart()
+  }
+
+  const saveWish = (wishData) => {
+          localStorage.setItem('wish', JSON.stringify(wishData))
+          setLocalWish([...wishData])
+          setWishCount(wishData.length)
+          updateWishList()
+        }
+  
+  // --- Add product for the first time ---
+  const addToCart = (prd) => {
+    const existing = loadCart()
+    const found = existing.find(item => item.product.slug === prd.slug)
+    if (found) {
+      found.quantity += 1
+    } else {
+      existing.push({ product: prd, quantity: 1 })
+    
+      saveCart(existing)
     }
   }
 
-  // update wishlist
-  const updateWish = async(prd : any) => {
-    if(isLogged){
-      const res = await updateWishList(prd)
-      if(res?.status === 200 || res?.status === 201) {
-        const list = await getWishList()
-        return setLocalWish(list.data)
-      }
-    }
-    else{
-      nav('/login')
-    }
-  }
-
-  // create
   const addWish = async(prd :any) => {
-    if(isLogged){
-        const res = await addWishList(prd._id)
-      if(res?.status === 200 || res?.status === 201) {
-        const list = await getWishList()
-        return setLocalWish(list.data)
+          const existing = loadWish()
+          const foundIndex = existing.findIndex((item) => item.product.slug === prd.slug);
+          if (foundIndex !== -1) {
+            // If found, remove it (toggle off)
+            existing.splice(foundIndex, 1);
+          } else {
+            // If not found, add it (toggle on)
+            existing.push({ product: prd, quantity: 1 });
+          }
+          saveWish(existing)
+        }
+
+  // --- Increase quantity ---
+  const addOne = (prd) => {
+    const existing = loadCart()
+    const updated = existing.map(item =>
+      item.product.slug === prd.slug
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    )
+    saveCart(updated)
+  }
+  // --- Decrease quantity ---
+  const minusOne = (prd) => {
+    const existing = loadCart()
+    const updated = existing
+      .map(item =>
+        item.product.slug === prd.slug
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+      .filter(item => item.quantity > 0) // remove if quantity hits
+    saveCart(updated)
+    }
+  // --- Remove product entirely ---
+  const removeFromCart = (prd) => {
+    const existing = loadCart().filter(item => item.product.slug !== prd.slug)
+    saveCart(existing)
+  }
+
+  // --- Quantity helper for rendering ---
+  const quantity = (prd) => {
+    const existing = localCart.find(item => item.product.slug === prd.slug)
+    return existing?.quantity || 0
+  }
+
+
+  // sort new to old
+  const newPrd = () => {
+    const updated =  [...localProducts].sort((a:any,b:any) => new Date(b.createdAt) - new Date(a.createdAt))
+    setLocalProducts(updated)
+    setCurrentPage(1)
+  }
+
+  // sort new to old
+  const oldPrd = () => {
+    const updated = [...localProducts].sort((a: any, b: any) => Number(b.salesCount) - Number(a.salesCount))
+    setLocalProducts(updated);
+    setCurrentPage(1)
+  };
+
+
+  // sort high to low
+  const highPrice = () => {
+    const updated =  [...localProducts].sort((a:any,b:any) => b.price - a.price)
+    setLocalProducts(updated)
+    setCurrentPage(1)
+  }
+
+  // sort low to high
+  const lowPrice = () => {
+    const updated =  [...localProducts].sort((a:any,b:any) => a.price - b.price)
+    setLocalProducts(updated)
+    setCurrentPage(1)
+  }
+
+  // item
+  const item=(slug:any) => {
+    nav(`/products/${slug}`,{state:{details:slug}})
+  }
+
+  // category filter
+  const showCat=async(slug:string)=> {
+    try{
+      if(defaultBrand){
+        const res = await brandCatFilter(slug,defaultBrand)
+        setLocalProducts(res)
+        setCurrentPage(1)
+
+      }
+      else{
+        const res = await catFilter(slug)
+        setLocalProducts(res)
+        setCurrentPage(1)
+
       }
     }
-    else{
-      nav('/login')
+    catch(e){
+      console.log(e)
     }
-  } 
+  }
+
+  // brand filter
+  const showBrand=async(slug:string)=> {
+    try{
+      if(defaultCat){
+        const res = await brandCatFilter(defaultCat,slug)
+        setLocalProducts(res)
+        setCurrentPage(1)
+      }
+      else{
+        const res = await brandFilter(slug)
+        setLocalProducts(res)
+        setCurrentPage(1)
+      }
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+
+  const clearFilters = () => {
+    setDefaultBrand("")
+    setDefaultCat("")
+    setLocalProducts(products)
+  }
+
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 20;
+
+  // ✅ Calculate current products
+  const indexOfLast = currentPage * productsPerPage;
+  const indexOfFirst = indexOfLast - productsPerPage;
+  const currentProducts = localProducts?.slice(indexOfFirst, indexOfLast);
+
+  const totalPages = Math.ceil(localProducts?.length / productsPerPage);
+
+  const handlePageChange = (page: number) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // optional: scroll up on page change
+    }
+  };
+
+  const getPaginationNumbers = () => {
+      const pages = [];
+
+      if (totalPages <= 5) {
+        for (let i = 1; i <= totalPages; i++) pages.push(i);
+      } else {
+        // Always show 1st and 2nd page
+        pages.push(1);
+        if (currentPage > 3) pages.push("...");
+
+        const start = Math.max(2, currentPage - 1);
+        const end = Math.min(totalPages - 1, currentPage + 1);
+
+        for (let i = start; i <= end; i++) pages.push(i);
+
+        if (currentPage < totalPages - 2) pages.push("...");
+
+        // Always show last page
+        pages.push(totalPages);
+      }
+
+      return pages;
+    };
+
 
   return (
-    <>
-      <div className='align-center justify-center flex'>
-        <h1 className='font-bold'>GRAND REDUCTION DEALS</h1>
+    <div className='m-10 mt-6 p-5 flex flex-col gap-10'>
+      <div className='items-center justify-center flex flex-col gap-2'>
+        <h1 className='font-bold text-3xl dark:text-white'>All Products</h1>
+        <div className="h-[3px] w-1/16 mx-auto bg-[#d5754d]"></div>
       </div>
 
-      <div className="m-10 p-5">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-15">
-          {localProducts?.map((prd : any) => (
-            <li key={prd._id} className="bg-white shadow rounded-lg border-1 border-[#d5754d] hover:cursor-pointer p-4 flex flex-col items-center">
-              <div className='ml-auto text-lg'>
-                {/* if logged action works */}
-                {isLogged ?
+      <div className='flex flex-col gap-4'>
+        {/* sort */}
+        <div className='flex justify-end'>
+          <select value={defaultOption} className='pl-2 pr-14 py-2 border border-gray-300 bg-white rounded-md text-sm font-semibold focus:outline-none cursor-pointer' 
+          onChange={
+            (e) => {
+              setDefaultOption(e.target.value)
+            if(e.target.value==='new') newPrd();
+            if(e.target.value==='old') oldPrd();
+            if(e.target.value==='high') highPrice();
+            if(e.target.value==='low') lowPrice();
+            }}>
+            <option value="featured" className='hidden'>Sort By: Featured</option>
+            <option value="new" className=''>Newest First</option>
+            <option value="low" className=''>Price: Low to High</option>
+            <option value="high" className=''>Price: High to Low</option>
+            {/* <option value="old" className=''>Most Popular</option> */}
+          </select>
+        </div>
+        {/* main */}
+        <div className='flex gap-4'>
+            {/* filter */}
+            <div className='flex flex-col gap-4 dark:text-white'>
+              <div className='border border-[#d5754d] p-4 rounded-lg'>
+                <div className='flex justify-between items-center'>
+                    <p className='font-bold text-[#d5754d]'>Filters</p>
+                    {(defaultCat || defaultBrand) && 
+                    <p className='font-semibold text-blue-600 text-xs hover:underline cursor-pointer' onClick={()=>clearFilters()}>Clear all</p> }
+                </div>
+              {/* categories */}
+              <div className='text-sm'>
+                <p className='font-bold my-2 dark:text-[#ffb684]'>Categories</p>
+                <ul className='flex flex-col gap-2 max-h-50 overflow-y-auto max-w-80 overflow-x-auto'>
+                  {categories.map((item) => (
+                    <li key={item.slug} className="flex gap-2 cursor-pointer items-center" onClick={()=>showCat(item.slug)}>
+                      <label className="flex gap-2 items-center cursor-pointer w-full">
+                        <input type="radio" name="category" value={defaultCat} checked={defaultCat === item.slug} onChange={() => setDefaultCat(item.slug)} className="cursor-pointer"/>
+                        <p>{item.name}</p>
+                        <p className="text-gray-500 text-sm">({item.productCount})</p>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* brands */}
+              <div className='text-sm'>
+                <p className='font-bold my-2 dark:text-[#ffb684]'>Brands</p>
+                <ul className='flex flex-col gap-2 max-h-50 overflow-y-auto'>
+                  {localBrands.map((item) => (
+                    <li key={item.slug} className="flex gap-2 cursor-pointer items-center" onClick={()=>showBrand(item.name)}>
+                      <label className="flex gap-2 items-center cursor-pointer w-full">
+                        <input type="radio" name="brand" value={defaultBrand} checked={defaultBrand === item.name} onChange={() => setDefaultBrand(item.name)} className="cursor-pointer"/>
+                        <p>{item.name}</p>
+                        <p className="text-gray-500 text-sm">({item.productCount})</p>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              </div>
+              {/* price filter */}
+            </div>
+            {/* cards */}
+            <div className='flex flex-col gap-10'>
+            <ul className="grid grid-cols-4 gap-5">
+          {currentProducts.map((prd : any) => (
+            <li key={prd.slug} onClick={()=>item(prd.slug)} className="group bg-white hover:shadow-2xl rounded-xl border-1 border-[#d5754d] hover:cursor-pointer p-4 flex flex-col items-center hover:translate-x hover:-translate-y-4 transition-all duration-400 gap-2 dark:bg-gray-900 dark:text-white dark:hover:shadow-[#d5754d]/30">
+                      {/* cart or wish */}
+                      <div className='text-lg transition duration-300 group-hover:blur-sm w-full flex justify-end'>
+                          {/* if logged action works */}
+                          
+                          {localWish.some((wish : any) => wish.product.slug === prd.slug) ? 
+                          (<HiMiniHeart className='text-red-500' onClick={(e) => {e.stopPropagation(); addWish(prd)}} />) :
+                          <HiOutlineHeart onClick={(e) => {e.stopPropagation(); addWish(prd)} }/>
+                          
+                          }
+                      </div>
+
+                    {/* prd img */}
+                    <div className="relative flex mt-2 w-full justify-center">
+                      {/* <img src={'/assets/Product/Product.webp'} className="h-50 rounded-lg transition duration-300 group-hover:blur-sm" /> */}
+                      <img src={prd.image? prd.image:null} className="w-full h-50 rounded-lg transition duration-300 group-hover:blur-sm" />
+
+                      {/* on hover icons */}
+                      <div className='text-lg absolute inset-0 flex justify-center items-center hidden group-hover:flex transition duration-500 gap-2'>
+                        {/* wish */}
+                        <div className='p-2 rounded-full bg-white hover:bg-[#ffb684] hover:border-[#ffb684] hover:scale-110 border border-gray-200 transition duration-300'>
+                            {/* if logged action works */}
+                            
+                            {localWish.some((wish : any) => wish.product.slug === prd.slug) ? 
+                            (<HiMiniHeart className='text-red-500' onClick={(e) => {e.stopPropagation();addWish(prd)}} />) :
+                            <HiOutlineHeart className='dark:text-black' onClick={(e) => {e.stopPropagation();addWish(prd)}}/>
+                            
+                            }
+                        </div>
+                        {/* cart */}
+                        <div className='p-2 rounded-full bg-white hover:bg-[#ffb684] hover:border-[#ffb684] hover:scale-110 border border-gray-200 transition duration-200'>
+                          {!localCart.some((cart : any) => cart.product.slug === prd.slug) ?
+                            <HiShoppingCart className='dark:text-black' onClick={(e) => {e.stopPropagation(); addToCart(prd)}}/> :
+                            <HiShoppingCart className="text-green-400" onClick={(e)=>{e.stopPropagation(); removeFromCart(prd)}}/>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                {/* name */}
+                <div className='flex flex-col w-full h-full gap-2 mt-2'>
+                  <div className='flex gap-2'>
+                    <p className="text-xs text-[#d5754d] font-semibold">{prd.category}</p>
+                    <p className="text-xs font-semibold">{prd.brand}</p>
+                  </div>
+                  <p className="font-bold text-sm break-words">{prd.name}</p>
+                </div>
                 
-                 localWish.some((wish : any) => wish.product_id._id === prd._id) ? 
-                (<HiMiniHeart className='text-red-500' onClick={() => updateWish(prd)} />) :
-                <HiOutlineHeart onClick={() => addWish(prd)} />
-                
-                : (
-                  <HiOutlineHeart onClick={() => addWish(prd)} />
-                )
-                }
-              </div>
-              <div className="w-full flex items-center justify-center mb-4">
-                <img src={`/assets/All Products/${prd.img}`} className="w-4/5 max-w-[220px] h-50 rounded-lg" />
-              </div>
-
-              <p className="font-bold text-center text-sm mb-2">{prd.name}</p>
-
-              <div className="flex justify-between w-full text-sm">
-                <p className="text-gray-900 font-semibold whitespace-nowrap">₹{prd.rate}</p>
-                <p className="text-green-500 font-bold truncate max-w-[100px] text-right">{prd.desc}</p>
-              </div>
-
-              <div className="flex flex-col gap-2 py-2">
-                <p className="text-gray-500 text-sm whitespace-nowrap">1k+ bought in the last month</p>
-                <div className="flex">
-                  <span className="text-gray-500 text-sm whitespace-nowrap">Delivery</span>
-                  <span className="font-bold ml-2 text-sm"> Jul 24 - Jul 30</span>
+                {/* rating */}
+                <div className='flex items-center gap-1 w-full'>
+                  <div className='flex'>
+                      {Array.from({length: 4},(_, i) => (
+                        <FaStar key={i} className='size-3 text-yellow-400' />
+                      ))}
+                        <CiStar className='size-3' />
+                  </div>
+                    <p className='text-xs'>{prd.defaultRating}</p>
                 </div>
 
-              {isLogged ? (
-              isLoading(prd._id) ? (
-                <button className="font-bold m-2 p-2 bg-gray-400 rounded-full cursor-not-allowed" disabled>
-                  <BiLoaderCircle className='mx-auto' />
-                </button>
-              ) : !localCart.some((cart : any) => cart.product_id._id === prd._id) ? (
-                <button
-                  className="font-bold m-2 p-2 bg-yellow-400 rounded-full cursor-pointer hover:bg-yellow-500"
-                  onClick={() => addToCart(prd)}
-                >
-                  Add to Cart
-                </button>
-              ) : (
-                <button
-                  className="font-bold m-2 px-4 py-2 border-2 border-yellow-400 rounded-full cursor-pointer flex justify-between items-center"
-                >
-                  {quantity(prd) > 1 ? (
-                    <HiMinus className='text-lg' onClick={() => minusOne(prd)} />
-                  ) : (
-                    <MdOutlineDelete className='text-lg' onClick={() => removeFromCart(prd)} />
-                  )}
-                  <span className='text-lg'>{quantity(prd)}</span>
-                  <HiPlus className='text-lg' onClick={() => addOne(prd)} />
-                </button>
-              )
-            ) : (
-              <button
-                className="font-bold m-2 p-2 bg-yellow-400 rounded-full cursor-pointer hover:bg-yellow-500"
-                onClick={() => addToCart(prd)}
-              >
-                Add to Cart
-              </button>
-            )}
+                {/* desc */}
+                <div className="flex justify-between w-full items-center">
+                  <p className="text-gray-900 font-bold text-xl whitespace-nowrap dark:text-white">₹{prd.price}</p>
+                  <p className="text-gray-500 font-semibold text-xs whitespace-nowrap">PER PCS</p>
+                </div>
+  
+                <div className="flex flex-col gap-2 p-2  w-full">
+                  {/* action button  */}
+                    {
+                    isLoading(prd.slug) ? (
+                      <button className="font-bold m-2 p-2 bg-gray-400 rounded-full cursor-not-allowed" disabled>
+                        <BiLoaderCircle className='mx-auto' />
+                      </button>
+                    ) : !localCart.some((cart : any) => cart.product.slug === prd.slug) ? (
+                      <button
+                        className="font-bold m-2 p-2 bg-[#ffb684] hover:bg-[#d5754d] rounded-xl cursor-pointer hover:shadow-xl text-sm flex items-center gap-1 justify-center dark:text-black"
+                        onClick={(e) => {e.stopPropagation();addToCart(prd)}}
+                      ><IoMdCart className='size-4'/>
+                        Add to Cart
+                      </button>
+                    ) : (
+                      <button
+                        className="font-bold m-2 px-4 py-2 border-2 border-[#d5754d] rounded-xl cursor-pointer flex justify-between items-center hover:shadow-xl"
+                      >
+                        {quantity(prd) > 1 ? (
+                          <HiMinus className='text-lg' onClick={(e) => {e.stopPropagation(); minusOne(prd)}} />
+                        ) : (
+                          <MdOutlineDelete className='text-lg' onClick={(e) => {e.stopPropagation(); removeFromCart(prd)}} />
+                        )}
+                        <span className='text-lg'>{quantity(prd)}</span>
+                        <HiPlus className='text-lg' onClick={(e) => {e.stopPropagation(); addOne(prd)}} />
+                      </button>
+                    )
+                  }
+                  
+      
+                </div>
+              </li>
+            ))}
+          </ul>
+          {/* pagination */}
+          {( localProducts.length > 0) && (
+            <div className="flex justify-center items-center gap-2 mt-6 text-xs">
 
+              {/* Prev Button */}
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                className={`px-4 py-1 rounded-md border border-[#d5754d] text-sm dark:text-white ${
+                  currentPage === 1
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-[#ffb684] cursor-pointer"
+                }`}
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
+
+              {/* Page numbers with ellipsis */}
+              {getPaginationNumbers().map((page, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => typeof page === "number" && handlePageChange(page)}
+                  disabled={page === "..."}
+                  className={`px-4 py-1 rounded-md border border-[#d5754d] text-sm ${
+                    page === "..."
+                      ? "cursor-default border-none"
+                      : currentPage === page
+                      ? "bg-[#d5754d] text-white"
+                      : "hover:bg-[#ffb684] cursor-pointer"
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+
+              {/* Next Button */}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                className={`px-4 py-1 rounded-md border border-[#d5754d] dark:text-white text-sm ${
+                  currentPage === totalPages
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-[#ffb684] cursor-pointer"
+                }`}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+
+            </div>
+          )}
+
+          {/* pagination */}
+          </div>
+          {/* loading */}
+            {localProducts.length == 0 &&
+              <div className='flex justify-center items-center w-full'>
+                <p className='font-bold dark:text-white'>{isProductLoading ? 'Loading':'No Products Available'}</p>
               </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+            }
+        </div>
+        </div>
+
+    </div>
   );
 };
 

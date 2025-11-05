@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { useAuth } from "../Context/UserRole.context"
+import { useAuth } from "../../Context/UserRole.context"
 
 export const AdminRoute = ({allowedRole}) => {
     const {role,loading}= useAuth()

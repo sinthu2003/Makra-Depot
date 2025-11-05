@@ -1,0 +1,20 @@
+{
+  "companyName": "Firecrackers",
+  "description": "Your trusted source for premium fireworks and celebration supplies.",
+  "phone": "+91 98765 43210",
+  "email": "support@firecrackers.com",
+  "website": "https://firecrackers.com",
+  "address": {
+    "street": "123 Celebration Street",
+    "city": "Sivakasi",
+    "state": "Tamil Nadu",
+    "zipCode": "626123",
+    "country": "India"
+  },
+  "socialMedia": {
+    "facebook": "https://facebook.com/firecrackers",
+    "instagram": "https://instagram.com/firecrackers",
+    "twitter": "https://twitter.com/firecrackers",
+    "youtube": "https://youtube.com/firecrackers"
+  }
+}

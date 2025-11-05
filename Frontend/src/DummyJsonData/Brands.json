@@ -1,0 +1,142 @@
+[
+  {
+    "id": "brand-01",
+    "name": "SkyBlaze Fireworks",
+    "slug": "skyblaze-fireworks",
+    "description": "Premium aerial fireworks with vibrant effects",
+    "logo": "/assets/Brand/skyblaze.png",
+    "website": "https://skyblaze-fireworks.com",
+    "displayOrder": 1,
+    "isActive": true,
+    "productCount": 3,
+    "metaTitle": "SkyBlaze Fireworks - Premium Aerials",
+    "metaDescription": "Explore SkyBlaze rockets, shells, and aerial cakes",
+    "metaKeywords": "aerial fireworks, rockets, shells",
+    "customFields": {
+      "country": "USA",
+      "founded": "1999"
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "brand-02",
+    "name": "ThunderStrike",
+    "slug": "thunderstrike",
+    "description": "High-impact sound fireworks and crackers",
+    "logo": "/assets/Brand/thunderstrike.png",
+    "website": "https://thunderstrikefire.com",
+    "displayOrder": 4,
+    "isActive": true,
+    "productCount": 18,
+    "metaTitle": "ThunderStrike Firecrackers",
+    "metaDescription": "Explore premium sound-based fireworks",
+    "metaKeywords": "firecrackers, thunder bombs",
+    "customFields": {
+      "country": "China",
+      "founded": "2005"
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "brand-03",
+    "name": "GlowSpark",
+    "slug": "glowspark",
+    "description": "Colorful sparklers for all celebrations",
+    "logo": "/assets/Brand/glowspark.png",
+    "website": "https://glowspark.fun",
+    "displayOrder": 3,
+    "isActive": true,
+    "productCount": 2,
+    "metaTitle": "GlowSpark Sparklers",
+    "metaDescription": "Safe and colorful sparklers for kids",
+    "metaKeywords": "sparklers, glow fireworks",
+    "customFields": {
+      "country": "India",
+      "founded": "2010"
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "brand-04",
+    "name": "Phoenix Pyro",
+    "slug": "phoenix-pyro",
+    "description": "Professional-grade display fireworks",
+    "logo": "/assets/Brand/phoenixpyro.png",
+    "website": "https://phoenixpyro.pro",
+    "displayOrder": 4,
+    "isActive": true,
+    "productCount": 3,
+    "metaTitle": "Phoenix Pyro Display Items",
+    "metaDescription": "Large-scale fireworks for events",
+    "metaKeywords": "display fireworks, pyro shows",
+    "customFields": {
+      "country": "UK",
+      "founded": "1990"
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "brand-05",
+    "name": "FireNova Industries",
+    "slug": "firenova-industries",
+    "description": "Eco-friendly firecrackers with reduced smoke",
+    "logo": "/assets/Brand/firenova.png",
+    "website": "https://firenovaeco.com",
+    "displayOrder": 5,
+    "isActive": true,
+    "productCount": 0,
+    "metaTitle": "FireNova Eco Fireworks",
+    "metaDescription": "Low-smoke crackers and fireworks for safe celebrations",
+    "metaKeywords": "eco fireworks, green crackers",
+    "customFields": {
+      "country": "India",
+      "founded": "2018"
+    },
+    "createdAt": "2025-01-02T00:00:00.000Z",
+    "updatedAt": "2025-01-02T00:00:00.000Z"
+  },
+  {
+    "id": "brand-06",
+    "name": "BlazeMasters",
+    "slug": "blazemasters",
+    "description": "Professional fireworks for big events and shows",
+    "logo": "/assets/Brand/blazemasters.png",
+    "website": "https://blazemasters.com",
+    "displayOrder": 6,
+    "isActive": true,
+    "productCount": 0,
+    "metaTitle": "BlazeMasters Event Fireworks",
+    "metaDescription": "Large display fireworks for festivals and concerts",
+    "metaKeywords": "festival fireworks, aerial show",
+    "customFields": {
+      "country": "Germany",
+      "founded": "2000"
+    },
+    "createdAt": "2025-01-03T00:00:00.000Z",
+    "updatedAt": "2025-01-03T00:00:00.000Z"
+  },
+  {
+    "id": "brand-07",
+    "name": "SparkJoy",
+    "slug": "sparkjoy",
+    "description": "Fun party fireworks and confetti poppers",
+    "logo": "/assets/Brand/sparkjoy.png",
+    "website": "https://sparkjoyfireworks.com",
+    "displayOrder": 7,
+    "isActive": true,
+    "productCount": 0,
+    "metaTitle": "SparkJoy Party Fireworks",
+    "metaDescription": "Party items like confetti, poppers, and sparklers",
+    "metaKeywords": "party fireworks, confetti, poppers",
+    "customFields": {
+      "country": "Japan",
+      "founded": "2015"
+    },
+    "createdAt": "2025-01-04T00:00:00.000Z",
+    "updatedAt": "2025-01-04T00:00:00.000Z"
+  }
+]

@@ -2,17 +2,35 @@ import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator"
 
 export class ProductDto {
     @IsString() @IsNotEmpty()
-    name:String
+    name:string
 
-    @IsNotEmpty()
-    desc:String
+    @IsString()
+    desc:string
 
     @IsNotEmpty() @IsNumber()
-    rate:Number
+    rate:number
+
+    @IsNumber()
+    discount:number
+
+    @IsBoolean()
+    new:boolean
 
     @IsNotEmpty() @IsBoolean()
-    added:Boolean
+    stock:boolean
+
+    @IsString() 
+    section:string
     
+    @IsNotEmpty() @IsNumber()
+    shipping_days:number
+    
+    @IsBoolean()
+    added:boolean
+
+    @IsBoolean()
+    liked:boolean
+
     @IsNotEmpty()
-    img:String
+    img:string
 }

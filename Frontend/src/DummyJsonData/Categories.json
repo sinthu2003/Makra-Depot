@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Aerial Fireworks",
+    "slug": "aerial-fireworks",
+    "productCount": "2"
+  },
+  {
+    "name": "Ground Spinners",
+    "slug": "ground-spinners",
+    "productCount": "1"
+  },
+  {
+    "name": "Fountains",
+    "slug": "fountains",
+    "productCount": "1"
+  },
+  {
+    "name": "Roman Candles",
+    "slug": "roman-candles",
+    "productCount": "1"
+  },
+  {
+    "name": "Firecrackers",
+    "slug": "firecrackers",
+    "productCount": "3"
+  },
+  {
+    "name": "Sparklers",
+    "slug": "sparklers",
+    "productCount": "2"
+  },
+  {
+    "name": "Smoke Items",
+    "slug": "smoke-items",
+    "productCount": "1"
+  },
+  {
+    "name": "Fancy Wheels",
+    "slug": "fancy-wheels",
+    "productCount": "1"
+  }
+]
