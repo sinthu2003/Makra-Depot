@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CouponController } from './coupon.controller';
 import { CouponService } from './coupon.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Coupon, CouponSchema } from 'src/schemas/Coupon.schema';
+import { Coupon, CouponSchema } from '../schemas/Coupon.schema';
 
 @Module({
    imports : 

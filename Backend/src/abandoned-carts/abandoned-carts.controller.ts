@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Put, Request, UseGuards } from '@nestjs/common';
 import { AbandonedCartsService } from './abandoned-carts.service';
-import { JwtGuard } from 'src/user/auth/jwt-auth.guard';
+import { JwtGuard } from '../user/auth/jwt-auth.guard';
 
 @Controller('abandoned-cart')
 export class AbandonedCartsController {

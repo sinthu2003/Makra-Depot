@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Brand } from 'src/schemas/Brand.schema';
-import { Order } from 'src/schemas/Order.schema';
+import { Brand } from '../schemas/Brand.schema';
+import { Order } from '../schemas/Order.schema';
 
 @Injectable()
 export class OrderService {

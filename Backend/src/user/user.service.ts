@@ -3,14 +3,14 @@ import { UserDto } from './dto/User.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import {Model} from 'mongoose' 
-import { User } from 'src/schemas/User.schema';
+import { User } from '../schemas/User.schema';
 import * as bcrypt from 'bcrypt'
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
-import { RefreshTokenDto } from 'src/dto/RefreshToken.dto';
+import { RefreshTokenDto } from '../dto/RefreshToken.dto';
 import { v4 as uuid } from 'uuid';
 import {Types} from 'mongoose'
-import { Public } from 'src/public.decorator';
+import { Public } from '../public.decorator';
 // import twilio, { Twilio } from 'twilio';
 import * as twilio from 'twilio';
 import { Twilio } from 'twilio';

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { OtpService } from './otp.service';
 import { OtpController } from './otp.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Otp, OtpSchema } from 'src/schemas/otp.schema';
+import { Otp, OtpSchema } from '../schemas/otp.schema';
 
 @Module({
  imports : [
