@@ -111,16 +111,16 @@ export class CustomersService {
     return await this.customer.findOneAndUpdate({phone},data)
   }
 
-  orderPlacedSms(data:any) {
-    const {id,phone} = data
-    const mobile = '+91'+phone
-    // twilio
-        return this.twilioClient.messages.create({
-            body:`Your Order from Firecrackers.com is Successfull. View Orders : https://makradepot.in/order-confirmation/${id}`,
-            from:process.env.TWILIO_NUMBER,
-            to:mobile
-        })
-  }
+  // orderPlacedSms(data:any) {
+  //   const {id,phone} = data
+  //   const mobile = '+91'+phone
+  //   // twilio
+  //       return this.twilioClient.messages.create({
+  //           body:`Your Order from Firecrackers.com is Successfull. View Orders : https://makradepot.in/order-confirmation/${id}`,
+  //           from:process.env.TWILIO_NUMBER,
+  //           to:mobile
+  //       })
+  // }
 
   orderUpdate(phone : any,total:any){
     return this.customer.findOneAndUpdate({phone},{$inc: {totalOrders:1,totalSpent:total}},{new:true})

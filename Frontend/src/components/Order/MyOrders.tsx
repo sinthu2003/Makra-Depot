@@ -6,6 +6,7 @@ import { FaRegCalendar } from 'react-icons/fa'
 import { FaLocationDot } from 'react-icons/fa6'
 import { FiSearch } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
+import Invoice from './Invoice'
 
 const MyOrders = () => {
     const [orders,setOrders] = useState([])
@@ -75,15 +76,23 @@ const MyOrders = () => {
             {filterOrd.map((prd) => (
                 <div className='w-full border border-[#d5754d] rounded-lg shadow hover:shadow-xl hover:scale-102 p-4 transition duration-300 flex flex-col gap-2 bg-white/60' key={prd.id}>
                   {/* order details */}
-                  <div className='flex gap-4'>
-                      <p className='font-semibold'>Order #{prd.orderNumber}</p>
-                      <p className='font-semibold flex items-center text-xs gap-1 p-1 bg-yellow-200/60 rounded-lg text-gray-600'><GoClock className='size-4'/><span>{prd.status.charAt(0).toUpperCase()+prd.status.slice(1)}</span></p>
-                      <p className='font-semibold flex items-center text-xs gap-1 text-red-400 rounded-lg'>Payment {prd.paymentStatus.charAt(0).toUpperCase()+prd.paymentStatus.slice(1)}</p>
-                  </div>
-                  <div className='flex gap-4 text-gray-600'>
-                      <p className='font-semibold flex items-center text-xs gap-1'><FaRegCalendar className='size-3'/><span>{new Date(prd.createdAt).toLocaleDateString('en-GB')}</span></p>
-                      <p className='font-semibold flex items-center text-xs gap-1'><MdOutlinePayment className='size-4'/><span>₹{prd.total}</span></p>
-                       <p className='font-semibold flex items-center text-xs gap-1'><FaLocationDot className='size-3'/><span>{prd.shippingAddress.city}</span></p>
+                  <div className='flex justify-between'>
+                    <div className='flex flex-col gap-2'>
+                      <div className='flex gap-4'>
+                          <p className='font-semibold'>Order #{prd.orderNumber}</p>
+                          <p className='font-semibold flex items-center text-xs gap-1 p-1 bg-yellow-200/60 rounded-lg text-gray-600'><GoClock className='size-4'/><span>{prd.status.charAt(0).toUpperCase()+prd.status.slice(1)}</span></p>
+                          <p className='font-semibold flex items-center text-xs gap-1 text-red-400 rounded-lg'>Payment {prd.paymentStatus.charAt(0).toUpperCase()+prd.paymentStatus.slice(1)}</p>
+                      </div>
+                      <div className='flex gap-4 text-gray-600'>
+                          <p className='font-semibold flex items-center text-xs gap-1'><FaRegCalendar className='size-3'/><span>{new Date(prd.createdAt).toLocaleDateString('en-GB')}</span></p>
+                          <p className='font-semibold flex items-center text-xs gap-1'><MdOutlinePayment className='size-4'/><span>₹{prd.total}</span></p>
+                          <p className='font-semibold flex items-center text-xs gap-1'><FaLocationDot className='size-3'/><span>{prd.shippingAddress.city}</span></p>
+                      </div>
+                    </div>
+                    {/* invoice */}
+                    <div>
+                        <Invoice invoice={prd}/>
+                    </div>
                   </div>
                   {/* line */}
                   <div className='h-[1px] border border-[#ffb684]/40'></div>

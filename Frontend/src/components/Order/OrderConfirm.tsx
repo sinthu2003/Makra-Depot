@@ -7,6 +7,7 @@ import { FaRegNoteSticky } from 'react-icons/fa6'
 import { FaLightbulb } from 'react-icons/fa'
 import { RiShoppingBag3Line } from 'react-icons/ri'
 import { FiHome } from 'react-icons/fi'
+import Invoice from './Invoice'
 
 const OrderConfirm = () => {
   const loc = useLocation()
@@ -15,24 +16,29 @@ const OrderConfirm = () => {
     <>
       <div className='my-4 w-[60%] min-h-screen mx-auto flex flex-col gap-5'>
           {/* success msg */}
-          <div className='bg-green-200 rounded-lg px-10 py-8 flex items-center gap-3'>
-              <GiFireworkRocket className='size-8' />
-              <p className='font-bold text-lg flex flex-col'>Order Successfully Placed
-                <span className='text-sm font-normal'>Order #{orderInfo.orderNumber} - {new Date(orderInfo.createdAt).toLocaleDateString('en-GB')}</span>
-              </p>
+          <div className='bg-green-200 rounded-lg px-10 py-8 flex items-center justify-between'>
+              <div>
+                   <GiFireworkRocket className='size-8' />
+                    <p className='font-bold text-lg flex flex-col'>Order Successfully Placed
+                      <span className='text-sm font-normal'>Order #{orderInfo.orderNumber} - {new Date(orderInfo.createdAt).toLocaleDateString('en-GB')}</span>
+                    </p>
+              </div>
+              <div>
+                  <Invoice invoice={orderInfo}/>
+              </div>
           </div>
           {/* items */}
           <div className='flex flex-col gap-4 dark:text-white'>
             <p className='flex gap-1 items-center font-bold text-xl'><LuPackageOpen className='text-[#d5754d]'/>Order Items</p>
             {orderInfo.items.map((prd) => (
-              <div className='flex gap-2 border-b border-[#ffb684]/80' key={prd.productId}>
+              <div className='flex gap-2 border-b border-[#ffb684]/80' key={prd._id}>
                 <img src="/assets/Product/Product.webp" className='w-15 h-15 rounded-lg'/>
                 {/* price */}
                 <div className='flex flex-col gap-1 mb-2'>
                   <p className='font-bold text-xs whitespace-nowrap word-break'>{prd.productName}</p>
                   {/* <p className='text-xs text-gray-700 whitespace-nowrap word-break'>SKU: {prd.sku}</p>
                   <p className='text-xs text-gray-700 whitespace-nowrap word-break'>Brand: {prd.brand}</p> */}
-                  <p className='text-xs whitespace-nowrap'>Qty: {prd.quantity} ₹{prd.price} each <span className='font-bold'>₹{prd.subtotal}</span></p>
+                  <p className='text-xs whitespace-nowrap'>Qty: {prd.price} ₹{prd.price} each <span className='font-bold'>₹{prd.subtotal}</span></p>
                 </div>
               </div>
             ))

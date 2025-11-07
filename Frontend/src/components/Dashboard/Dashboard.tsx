@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaUser } from 'react-icons/fa'
 import { GoSignOut } from 'react-icons/go'
 import { useNavigate } from 'react-router-dom'
 import ProfileCompletionChart from './ProfileCompletionChart'
 import BarChart from './BarChart'
+import { CountContext } from '../Navbar/CountContext'
 
 const Dashboard = () => {
+    const {setCartCount,setWishCount } = useContext(CountContext);
+
     const nav = useNavigate()
 
     const SignOut = async() => {
@@ -13,6 +16,8 @@ const Dashboard = () => {
         localStorage.removeItem('user')
         localStorage.removeItem('cart')
         localStorage.removeItem('wish')
+        setCartCount(0)
+        setWishCount(0)
         nav('/')
     }
 

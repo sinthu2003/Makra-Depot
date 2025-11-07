@@ -38,8 +38,8 @@ const BarChart = () => {
   const datas = async() => {
       const orderList = await myOrders()
       setOrder(prev => {
-        if (JSON.stringify(prev) !== JSON.stringify(orderList.data.data)) {
-          return orderList.data.data
+        if (JSON.stringify(prev) !== JSON.stringify(orderList?.data.data)) {
+          return orderList?.data.data
         }
         return prev
       })
@@ -56,7 +56,7 @@ const BarChart = () => {
     labels: ["Jan", "Feb", "Mar", "Apr", "May","June","July","Aug","Sep","Oct","Nov","Dec"],
     datasets: [
       {
-        label: "Sales",
+        label: "Orders",
         data: monthlyCounts,
         backgroundColor: "#d5754d",
       },
@@ -68,7 +68,7 @@ const BarChart = () => {
     plugins: {
       title: {
         display: true,
-        text: "Monthly Sales Chart",
+        text: "Monthly Chart",
       },
     },
   };

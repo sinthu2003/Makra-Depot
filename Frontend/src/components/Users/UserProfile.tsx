@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaRegCalendar, FaShieldAlt, FaTransgender, FaUser } from 'react-icons/fa'
 import { userDetails } from '../../api'
@@ -6,6 +6,7 @@ import { GoHeartFill, GoSignOut } from 'react-icons/go'
 import { MdMail, MdOutlineLocalPhone, MdOutlinePayment, MdShoppingCart } from 'react-icons/md'
 import { RiBuilding2Line } from 'react-icons/ri'
 import { PiHandCoinsBold, PiPackageBold } from 'react-icons/pi'
+import { CountContext } from '../Navbar/CountContext'
 
 const UserProfile = () => {
 
@@ -13,6 +14,8 @@ const UserProfile = () => {
 
     const nav = useNavigate()
     
+    const {setCartCount,setWishCount } = useContext(CountContext);
+  
     useEffect(() => {
        getData()
     },[])
@@ -35,6 +38,8 @@ const UserProfile = () => {
         localStorage.removeItem('user')
         localStorage.removeItem('cart')
         localStorage.removeItem('wish')
+        setCartCount(0)
+        setWishCount(0)
         nav('/')
     }
 

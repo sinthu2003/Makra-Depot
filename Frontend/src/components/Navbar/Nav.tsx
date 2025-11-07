@@ -81,14 +81,15 @@ const Nav = () => {
                     <span className='font-bold font-outfit md:text-xl text-3xl italic text-[#d5754d]'><Link to='/'>Makra Depot</Link></span></p>
                 </div>
                 {/* menu list */}
-                <div className='md:flex hidden font-medium justify-between gap-10 whitespace-nowrap'>
+                <div className='md:flex hidden font-medium justify-between gap-5 whitespace-nowrap'>
                          <div><Link to='/products' className="border-b-2 border-transparent hover:border-black hover:text-[#d5754d] transition-all duration-300 dark:text-white dark:hover:border-white">Products</Link></div>
                         <div><Link to='/categories' className="border-b-2 border-transparent hover:border-black dark:hover:border-white hover:text-[#d5754d] transition-all duration-300 dark:text-white">Categories</Link></div>
                         <div><Link to='/brands' className="border-b-2 border-transparent hover:border-black hover:text-[#d5754d] transition-all duration-300 dark:text-white dark:hover:border-white">Brands</Link></div>
                         <div>
                             <Link to='/quickbuy' className="transform border-transparent transition duration-300 bg-[#ffb684] px-4 py-1 rounded-full hover:bg-[#d5754d] hover:shadow-lg hover:scale-105 ease-in-out">Quick Buy</Link>
                         </div>
-                        <div><Link to='/dashboard' className="border-b-2 border-transparent hover:border-black hover:text-[#d5754d] transition-all duration-300 dark:text-white dark:hover:border-white">Dashboard</Link></div>
+                        {isLogged && 
+                        <div><Link to='/dashboard' className="border-b-2 border-transparent hover:border-black hover:text-[#d5754d] transition-all duration-300 dark:text-white dark:hover:border-white">Dashboard</Link></div> }
 
                 </div>
 
