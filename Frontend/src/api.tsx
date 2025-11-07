@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const apiUrl = 'https://makradepot-827015814474.asia-south1.run.app/csa-srv'
-const apiUrl = 'https://makra-depot-api.vercel.app';
+const apiUrl = 'https://makra-depot.vercel.app/api';
 // const apiUrl = 'http://localhost:3000/';
 
 // live apis
