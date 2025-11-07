@@ -8,6 +8,11 @@ async function bootstrap() {
   // pipes
   app.useGlobalPipes (new ValidationPipe());
 
+  if (process.env.VERCEL) {
+    const serverless = require('serverless-http');
+    return serverless(app.getHttpAdapter().getInstance());
+  }
+
   await app.listen(3000);
 }
 bootstrap();
