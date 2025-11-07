@@ -1,18 +1,30 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import * as serverless from 'serverless-http';
+
+let server: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-  // pipes
-  app.useGlobalPipes (new ValidationPipe());
-
-  if (process.env.VERCEL) {
-    const serverless = require('serverless-http');
-    return serverless(app.getHttpAdapter().getInstance());
-  }
-
-  await app.listen(3000);
+  app.useGlobalPipes(new ValidationPipe());
+  await app.init();
+  return app.getHttpAdapter().getInstance();
 }
-bootstrap();
+
+export const handler = async (event, context) => {
+  if (!server) {
+    const expressApp = await bootstrap();
+    server = serverless(expressApp);
+  }
+  return server(event, context);
+};
+
+// If running locally (not Vercel)
+if (!process.env.VERCEL) {
+  bootstrap().then(app => {
+    app.listen(3000);
+    console.log('Local server running at http://localhost:3000');
+  });
+}
