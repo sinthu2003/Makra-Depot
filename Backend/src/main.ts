@@ -8,36 +8,49 @@ async function createApp() {
 
   app.useGlobalPipes(new ValidationPipe());
 
+  // Enable CORS with proper configuration
   app.enableCors({
     origin: [
       "https://makra-depot.vercel.app",
       "http://localhost:3000"
     ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
     credentials: true,
-    allowedHeaders: 'Content-Type, Authorization'
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
   });
 
   await app.init();
   return app;
 }
 
-let server: any;
+let cachedServer: any;
+
+async function bootstrapServer() {
+  const app = await createApp();
+  return app.getHttpAdapter().getInstance();
+}
 
 export const handler = async (event: any, context: any) => {
-  if (!server) {
-    const app = await createApp();
-    const expressApp = app.getHttpAdapter().getInstance();
-    server = serverless(expressApp);
+  if (!cachedServer) {
+    const expressApp = await bootstrapServer();
+    cachedServer = serverless(expressApp);
   }
-  return server(event, context);
+  return cachedServer(event, context);
 };
 
-// For local dev
-if (!process.env.VERCEL) {
+// For local development
+if (process.env.NODE_ENV === 'development') {
   async function bootstrapLocal() {
     const app = await NestFactory.create(AppModule);
-    app.enableCors();
+    app.enableCors({
+      origin: [
+        "https://makra-depot.vercel.app",
+        "http://localhost:3000"
+      ],
+      methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+      credentials: true,
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+    });
     app.useGlobalPipes(new ValidationPipe());
     await app.listen(3000);
     console.log('LOCAL API running → http://localhost:3000');
