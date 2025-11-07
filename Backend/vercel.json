@@ -1,31 +1,15 @@
 {
   "version": 2,
-  "headers": [
+  "builds": [
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://makra-depot.vercel.app"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET,POST,PUT,DELETE,PATCH,OPTIONS,HEAD"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization, X-Requested-With"
-        },
-        {
-          "key": "Access-Control-Allow-Credentials",
-          "value": "true"
-        }
-      ]
+      "src": "dist/main.js",
+      "use": "@vercel/node"
     }
   ],
-  "functions": {
-    "api/**/*.ts": {
-      "maxDuration": 30
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/main.js"
     }
-  }
+  ]
 }
