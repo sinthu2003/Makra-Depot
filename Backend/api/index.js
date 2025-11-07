@@ -1,2 +1,3 @@
-const { handler } = require("../dist/main");
-module.exports = handler;
+// api/index.js
+const { handler } = require('../dist/main'); // CommonJS require
+module.exports = handler;                // CommonJS export
