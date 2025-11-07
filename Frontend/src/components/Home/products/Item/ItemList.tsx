@@ -264,7 +264,7 @@ const ItemList = ({item,review,relPrds,cart,wish}) => {
                     {/* prd img */}
                     <div className="relative flex mt-2 w-full justify-center">
                       {/* <img src={'/assets/Product/Product.webp'} className="h-50 rounded-lg transition duration-300 group-hover:blur-sm" /> */}
-                      <img src={prd.image} className="w-full h-50 rounded-lg transition duration-300 group-hover:blur-sm" />
+                      <img src={prd.image? prd.image:'/assets/Product/Product.webp'} className="w-full h-50 rounded-lg transition duration-300 group-hover:blur-sm" />
 
                       {/* on hover icons */}
                       <div className='text-lg absolute inset-0 flex justify-center items-center hidden group-hover:flex transition duration-500 gap-2'>
