@@ -1,3 +1,4 @@
 // api/index.js
-const { handler } = require('../dist/main'); // CommonJS require
-module.exports = handler;                // CommonJS export
+require('ts-node').register();
+const { handler } = require('../src/main'); // import TS file directly
+module.exports = handler;
