@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "noEmitOnError": false
+    "noEmitOnError": false,
+    "skipLibCheck": true,
+    "isolatedModules": true
   },
   "files": [],
   "references": [
