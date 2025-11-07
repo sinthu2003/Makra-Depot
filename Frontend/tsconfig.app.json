@@ -14,7 +14,7 @@
     "moduleDetection": "force",
 
     /*  Modified Section */
-    "noEmit": false,
+    "noEmit": true,
     "noEmitOnError": false,
 
     "jsx": "react-jsx",
