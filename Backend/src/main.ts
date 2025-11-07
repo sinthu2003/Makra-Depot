@@ -1,43 +1,34 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import * as serverless from 'serverless-http';
-
-let server: any;
+import serverless from 'serverless-http';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  app.useGlobalPipes(new ValidationPipe());
-  // CORS 
-  app.enableCors({
-  preflightContinue: false,
-  optionsSuccessStatus: 200,
-  origin: [
-    "https://makra-depot.vercel.app",
-    "https://makra-depot-eobjn8js6-sinthus-projects-be6433bb.vercel.app"
-  ],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-  credentials: true,
-  allowedHeaders: "Content-Type, Authorization"
-});
 
+  app.enableCors({
+    origin: [
+      "https://makra-depot.vercel.app",
+      "http://localhost:3000" // for local frontend testing
+    ],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    credentials: true,
+    allowedHeaders: "Content-Type, Authorization"
+  });
+
+  app.useGlobalPipes(new ValidationPipe());
   await app.init();
-  return app.getHttpAdapter().getInstance();
+  return serverless(app.getHttpAdapter().getInstance());
 }
 
-export const handler = async (event, context) => {
-  if (!server) {
-    const expressApp = await bootstrap();
-    server = serverless(expressApp);
-  }
-  return server(event, context);
+export const handler = async (event: any, context: any) => {
+  const expressApp = await bootstrap();
+  return expressApp(event, context);
 };
 
-// If running locally (not Vercel)
+// For local dev
 if (!process.env.VERCEL) {
   bootstrap().then(app => {
-    app.listen(3000);
-    console.log('Local server running at http://localhost:3000');
+    console.log('LOCAL API running → http://localhost:3000');
   });
 }
