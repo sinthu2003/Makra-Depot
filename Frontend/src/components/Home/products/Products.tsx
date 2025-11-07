@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { HiMinus, HiOutlineHeart, HiPlus, HiShoppingCart } from 'react-icons/hi'
 import { MdOutlineDelete } from 'react-icons/md';
