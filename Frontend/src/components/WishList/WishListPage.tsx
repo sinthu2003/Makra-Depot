@@ -10,6 +10,7 @@ const WishListPage = () => {
   
   const [wish,setWish] = useState([])
   const [cart,setCart] = useState([])
+  // @ts-ignore
   const { setCartCount,setWishCount } = useContext(CountContext);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const WishListPage = () => {
           }
         }
 
-    const addToCart = (prd) => {
+    const addToCart = (prd :any) => {
         const existing = loadCart()
         const found = existing.find(item => item.product.slug === prd.slug)
         if (found) {
@@ -58,14 +59,14 @@ const WishListPage = () => {
           saveWish(existing)
         } 
 
-      const saveWish = (wishData) => {
+      const saveWish = (wishData :any) => {
           localStorage.setItem('wish', JSON.stringify(wishData))
           setWish([...wishData])
           setWishCount(wishData.length)
           updateWishList()
         }
 
-      const saveCart = (cartData) => {
+      const saveCart = (cartData:any) => {
           localStorage.setItem('cart', JSON.stringify(cartData))
           setCart([...cartData])
           setCartCount(cartData.length)
@@ -117,6 +118,7 @@ const WishListPage = () => {
                               </div>
                               {/* price */}
                               <div className='md:ml-auto'>
+                                    {/* @ts-ignore */}
                                   <p className='font-bold'>₹{item.product.price}</p> 
                               </div>
                           </div>
