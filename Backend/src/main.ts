@@ -9,6 +9,19 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
+  // CORS 
+  app.enableCors({
+  preflightContinue: false,
+  optionsSuccessStatus: 200,
+  origin: [
+    "https://makra-depot.vercel.app",
+    "https://makra-depot-eobjn8js6-sinthus-projects-be6433bb.vercel.app"
+  ],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  credentials: true,
+  allowedHeaders: "Content-Type, Authorization"
+});
+
   await app.init();
   return app.getHttpAdapter().getInstance();
 }
