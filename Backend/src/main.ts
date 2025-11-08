@@ -8,7 +8,12 @@ const expressApp = express();
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
-  app.enableCors(); // allow frontend requests
+  app.enableCors({
+    origin: "https://makra-depot.vercel.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true
+  });
+
   await app.init();
 };
 bootstrap();
