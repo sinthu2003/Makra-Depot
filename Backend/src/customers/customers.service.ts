@@ -4,8 +4,8 @@ import mongoose, { Model } from 'mongoose';
 import { Twilio } from 'twilio';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt'
-import { Customer } from 'src/schemas/Customer.schema';
-import { Otp } from 'src/schemas/otp.schema';
+import { Customer } from '../schemas/Customer.schema';
+import { Otp } from '../schemas/otp.schema';
 import * as twilio from 'twilio/lib';
 
 @Injectable()

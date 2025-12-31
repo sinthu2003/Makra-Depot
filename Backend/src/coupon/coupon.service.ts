@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Coupon } from 'src/schemas/Coupon.schema';
+import { Coupon } from '../schemas/Coupon.schema';
 
 @Injectable()
 export class CouponService {

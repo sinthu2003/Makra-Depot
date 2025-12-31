@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AbandonedCartsController } from './abandoned-carts.controller';
 import { AbandonedCartsService } from './abandoned-carts.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AbandonedCart, AbandonedCartSchema } from 'src/schemas/AbandonedCart.schema';
+import { AbandonedCart, AbandonedCartSchema } from '../schemas/AbandonedCart.schema';
 
 @Module({
   imports : [

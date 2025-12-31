@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Category, CategorySchema } from 'src/schemas/Category.schema';
-import { Customer, CustomerSchema } from 'src/schemas/Customer.schema';
+import { Category, CategorySchema } from '../schemas/Category.schema';
+import { Customer, CustomerSchema } from '../schemas/Customer.schema';
 import { JwtModule } from '@nestjs/jwt';
-import { Otp, OtpSchema } from 'src/schemas/otp.schema';
+import { Otp, OtpSchema } from '../schemas/otp.schema';
 import { CustomersController } from './customers.controller';
 import { CustomersService } from './customers.service';
 

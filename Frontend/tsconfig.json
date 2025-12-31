@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    "noEmitOnError": false,
+    "skipLibCheck": true,
+    "isolatedModules": true
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

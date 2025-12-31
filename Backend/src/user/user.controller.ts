@@ -4,9 +4,9 @@ import { UserDto } from './dto/User.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtGuard } from './auth/jwt-auth.guard';
-import { RefreshTokenDto } from 'src/dto/RefreshToken.dto';
+import { RefreshTokenDto } from '../dto/RefreshToken.dto';
 import {Types} from 'mongoose'
-import { Public } from 'src/public.decorator';
+import { Public } from '../public.decorator';
 import { RoleGuard } from './auth/roles/role.guard';
 import { Role } from './auth/roles/role.enum';
 import { Roles } from './auth/roles/role.decorator';

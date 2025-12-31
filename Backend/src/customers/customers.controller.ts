@@ -1,7 +1,7 @@
 import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards, Get,Request, Put, Param } from '@nestjs/common';
 import { CustomersService } from './customers.service';
-import { JwtGuard } from 'src/user/auth/jwt-auth.guard';
-import { Public } from 'src/public.decorator';
+import { JwtGuard } from '../user/auth/jwt-auth.guard';
+import { Public } from '../public.decorator';
 
 @Controller('customers')
 export class CustomersController {

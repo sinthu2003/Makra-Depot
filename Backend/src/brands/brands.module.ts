@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { BrandsController } from './brands.controller';
 import { BrandsService } from './brands.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Brand, BrandSchema } from 'src/schemas/Brand.schema';
-import { Category, CategorySchema } from 'src/schemas/Category.schema';
+import { Brand, BrandSchema } from '../schemas/Brand.schema';
+import { Category, CategorySchema } from '../schemas/Category.schema';
 
 @Module({
    imports : [

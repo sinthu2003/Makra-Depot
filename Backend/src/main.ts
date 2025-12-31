@@ -1,13 +1,34 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import * as serverless from 'serverless-http';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import * as express from 'express';
+import * as cors from 'cors';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  // pipes
-  app.useGlobalPipes (new ValidationPipe());
+const expressApp = express();
 
-  await app.listen(3000);
-}
+// Apply CORS at the Express level
+expressApp.use(cors({
+  origin: 'https://makra-depot.vercel.app',
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
+
+const bootstrap = async () => {
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+  
+  // Also enable CORS in NestJS for double protection
+  app.enableCors({
+    origin: 'https://makra-depot.vercel.app',
+    credentials: true
+  });
+  
+  await app.init();
+};
+
 bootstrap();
+
+export const handler = serverless(expressApp);
