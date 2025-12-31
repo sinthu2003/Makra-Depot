@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const apiUrl = 'https://makradepot-827015814474.asia-south1.run.app/csa-srv'
-const apiUrl = 'http://localhost:3000'
+const apiUrl = 'https://makradepot-827015814474.asia-south1.run.app/csa-srv'
+// const apiUrl = 'http://localhost:3000'
 
 // live apis
 
@@ -217,7 +217,6 @@ export const shippingAdd = async (data :any) => {
         const updateModified = [...(clean || []),data]
         requestBody.shippingAddresses = updateModified
     }
-    console.log(requestBody)
     
      try{
         const res = await auth.put('/customers/me',requestBody)
@@ -413,6 +412,40 @@ export const getCartItems = async() => {
             }
         ))
         return cartData;
+     }
+     catch(e){
+        console.error('Error Message is',e);
+        return []
+    }
+}
+
+// update wishlist
+export const uploadProof = async(id:any,data:any) => {
+    try{
+        const res= await axios.post(`${apiUrl}/orders/${id}/payment-proof`,{data})
+        return res;
+     }
+     catch(e){
+        console.error('Error Message is',e);
+        return []
+    }
+}
+
+export const deleteProof = async(id:any,data:any) => {
+    try{
+        const res= await axios.post(`${apiUrl}/orders/del-proof`,{id,data})
+        return res;
+     }
+     catch(e){
+        console.error('Error Message is',e);
+        return []
+    }
+}
+
+export const cancel = async(id:any) => {
+    try{
+        const res= await axios.post(`${apiUrl}/orders/cancel`,{id})
+        return res;
      }
      catch(e){
         console.error('Error Message is',e);

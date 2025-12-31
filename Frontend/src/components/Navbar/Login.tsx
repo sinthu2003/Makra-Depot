@@ -170,127 +170,178 @@ const Login = () => {
         {/* toast */}
         <ToastContainer autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick pauseOnHover draggable />
 
-        <div className="flex justify-center items-center mt-20">
-            <div className="shadow-xl rounded-lg bg-white border border-[#f0c2a2]">
-            {!signup && !verify && 
-            <form className="flex flex-col gap-2 p-10" onSubmit={handleSubmit(onSubmit)} noValidate>
-            {/* head */}
-                <h1 className="text-center font-bold text-2xl text-[#d5754d]">Firecrackers</h1>
-                {/* enter phone number */}
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-center font-bold text-2xl">Welcome!</h1>
+        <div className="flex justify-center items-center min-h-[50vh] sm:min-h-[60vh] lg:min-h-screen dark:text-white/80 p-4">
+  <div className="shadow-xl rounded-lg bg-white dark:bg-gray-900 dark:shadow-[#ffb684]/30 border border-[#f0c2a2] w-full max-w-md">
+    {!signup && !verify && 
+      <form className="flex flex-col gap-4 p-6 sm:p-8 lg:p-10" onSubmit={handleSubmit(onSubmit)} noValidate>
+        {/* head */}
+        <h1 className="text-center font-bold text-xl sm:text-2xl text-[#d5754d]">Firecrackers</h1>
+        
+        {/* enter phone number */}
+        <div className="flex flex-col gap-4">
+          <h1 className="text-center font-bold text-xl sm:text-2xl">Welcome!</h1>
 
-                    <label className="font-medium text-sm" htmlFor="phone">Phone Number</label>
-                    <div className="border border-[#f0c2a2] rounded-lg flex px-2 gap-2">
-                        <span className="flex items-center pointer-events-none">
-                            <MdOutlineLocalPhone size={18} className="text-gray-400"/>
-                        </span>
-                        <input id='phone' type='phone' className="outline-none w-70 h-10 rounded-none text-sm font-medium" placeholder="Enter Your 10-digit mobile number" 
-                        {...register('phone')}/>
-                    </div>
-                    
-                    <p className="text-xs px-2 text-gray-600">We'll send you a verification code via SMS</p>
-                    
-                    {/* login */}
-                    <button type='submit' className={`w-full py-2 mt-4 rounded-lg bg-[#d5754d] hover:bg-[#b35f3f] text-white font-bold shadow-md transition duration-300 text-sm hover:-translate-y-1 ${login ?"cursor-pointer" :"cursor-not-allowed"} ${loadMsg && "disabled"}`}
-                    >{!loadMsg?'Get OTP' :'Sending OTP...'}</button>
-                </div> 
-                </form> }
-                { verify && 
-                <form className="flex flex-col gap-2 p-10" onSubmit={handleSubmit(onVerify)} noValidate>
-                    {/* head */}
-                <h1 className="text-center font-bold text-2xl text-[#d5754d]">Firecrackers</h1>
-                    <div className="flex flex-col gap-2">
-                        <h1 className="text-center font-bold text-2xl">Verify Your Phone</h1>
-                        <p className="text-xs flex justify-center text-gray-600">We've sent a verification code to {number}</p>
-                        {errMsg && <p className="text-xs w-full px-4 py-2 border border-red-300 bg-red-100/60 rounded-lg">Invalid OTP. Please Try Again</p>}
+          <label className="font-medium text-sm" htmlFor="phone">Phone Number</label>
+          <div className="border border-[#f0c2a2] rounded-lg flex px-3 gap-2 items-center">
+            <span className="flex items-center pointer-events-none">
+              <MdOutlineLocalPhone size={18} className="text-gray-400"/>
+            </span>
+            <input 
+              id='phone' 
+              type='phone' 
+              className="outline-none w-full h-12 sm:h-10 rounded-none text-sm font-medium bg-transparent" 
+              placeholder="Enter Your 10-digit mobile number" 
+              {...register('phone')}
+            />
+          </div>
+          
+          <p className="text-xs px-2 text-gray-600">We'll send you a verification code via SMS</p>
+          
+          {/* login */}
+          <button 
+            type='submit' 
+            className={`w-full py-3 sm:py-2 mt-2 rounded-lg bg-[#d5754d] hover:bg-[#b35f3f] text-white font-bold shadow-md transition duration-300 text-sm hover:-translate-y-1 ${login ? "cursor-pointer" : "cursor-not-allowed"} ${loadMsg && "disabled"}`}
+          >
+            {!loadMsg ? 'Get OTP' : 'Sending OTP...'}
+          </button>
+        </div> 
+      </form>
+    }
+    
+    { verify && 
+      <form className="flex flex-col gap-4 p-6 sm:p-8 lg:p-10" onSubmit={handleSubmit(onVerify)} noValidate>
+        {/* head */}
+        <h1 className="text-center font-bold text-xl sm:text-2xl text-[#d5754d]">Firecrackers</h1>
+        
+        <div className="flex flex-col gap-4">
+          <h1 className="text-center font-bold text-xl sm:text-2xl">Verify Your Phone</h1>
+          <p className="text-xs text-center text-gray-600">We've sent a verification code to {number}</p>
+          
+          {errMsg && (
+            <p className="text-xs w-full px-4 py-2 border border-red-300 bg-red-100/60 rounded-lg text-center">
+              Invalid OTP. Please Try Again
+            </p>
+          )}
 
-                        {/* otp */}
-                        <label className="font-medium text-sm" >Enter Verification Code</label>
-                        <div className="flex justify-between w-80 px-4">
-                            {[...Array(6)].map((_, index) => (
-                            <input
-                                key={index}
-                                type="text"
-                                maxLength="1"
-                                {...register(`otp${index + 1}`)}
-                                ref={(el) => (otpRefs.current[index] = el)}
-                                value={otpValues[index] || ""}
-                                onChange={(e) => handleChange(e, index)}
-                                onKeyDown={(e) => handleKeyDown(e, index)}
-                                className="w-10 h-10 border border-[#f0c2a2] text-center text-lg font-bold rounded-md focus:border-[#e6935b] outline-none"
-                            />
-                            ))}
-                        </div>
-                        <div className="flex text-xs font-semibold justify-between mt-2">
-                            <button className="text-gray-600 cursor-pointer" onClick={() =>change()}>Change Number</button>
-                            <button type='button' className="text-[#d5754d] cursor-pointer" onClick={()=>resendOtp({phone:value})}>Resend OTP</button>
-                        </div>
-                                                
-                        {/* otp */}
-                        <button type='submit' className={`w-full py-2 mt-4 rounded-lg bg-[#d5754d] hover:bg-[#b35f3f] text-white font-bold shadow-md transition duration-300 text-sm hover:-translate-y-1 ${check ?"cursor-pointer" :"cursor-not-allowed"}`}
-                        >Verify OTP</button>
-                    </div>
-            </form>
-            }
-            {signup &&  
-                <form className="flex flex-col gap-2 p-10" onSubmit={handleSubmit(newRegister)} noValidate>
-                {/* head */}
-                    <h1 className="text-center font-bold text-2xl text-[#d5754d]">Firecrackers</h1>
-                    {/* enter phone number */}
-                    <div className="flex flex-col gap-2">
-                        <h1 className="text-center font-bold text-2xl">Complete Your Profile</h1>
-                        <p className="text-xs flex justify-center text-gray-600">Just a few more details to get started</p>
-                        {/* error msgs */}
-                        {errors.name && <p className="text-xs w-full px-4 py-2 border border-red-300 bg-red-100/60 rounded-lg">{errors.name.message}</p>}
-
-                        {errors.email && <p className="text-xs w-full px-4 py-2 border border-red-300 bg-red-100/60 rounded-lg">{errors.email.message}</p>}
-                        
-                         {/* name */}
-                        <label className="font-medium text-sm" htmlFor="name">Name</label>
-                        {/* input */}
-                        <div className="border border-[#f0c2a2] rounded-lg flex px-2 gap-2">
-                            <span className="flex items-center pointer-events-none">
-                                <FaUser  size={18} className="text-gray-400"/>
-                            </span>
-                            <input type='text' id='name' className="outline-none w-60 h-10 rounded-none text-sm" placeholder="Enter your full name"
-                            {...register('name',{
-                                required:{
-                                value:true,
-                                message:'Enter Your Name',
-                                },
-                                minLength:{value:2,message:'Name must have min 2 letters'},
-                                validate:(value) =>{
-                                if(/ {2,}/.test(value)) return 'Double spaces are not allowed'
-                                }
-                            })}
-                            />
-                        </div>
-
-                        {/* email */}
-                        <label className="font-medium text-sm" htmlFor="email">Email</label>
-                        {/* input */}
-                        <div className="border border-[#f0c2a2] rounded-lg flex px-2 gap-2">
-                            <span className="flex items-center pointer-events-none">
-                                <MdMail  size={18} className="text-gray-400"/>
-                            </span>
-                            <input id='email' type='email' className="outline-none w-60 h-10 rounded-none text-sm" placeholder="Enter your email address"
-                            {...register('email',{
-                                required:{
-                                value:true,
-                                message:'Enter Your Email'
-                                },
-                                pattern: {value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,message:'Invalid Email Format'}
-                            })}
-                            />
-                        </div>
-                        <button type='submit' className="w-full py-2 mt-4 rounded-lg bg-[#d5754d] hover:bg-[#b35f3f] text-white font-bold shadow-md transition duration-300 text-sm hover:-translate-y-1 cursor-pointer"
-                        >Create Account</button>
-                    </div>
-                </form>
-            }
-            </div>
+          {/* otp */}
+          <label className="font-medium text-sm text-center">Enter Verification Code</label>
+          <div className="flex justify-center gap-2 sm:gap-3 w-full">
+            {[...Array(6)].map((_, index) => (
+              <input
+                key={index}
+                type="text"
+                maxLength="1"
+                {...register(`otp${index + 1}`)}
+                ref={(el) => (otpRefs.current[index] = el)}
+                value={otpValues[index] || ""}
+                onChange={(e) => handleChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                className="w-10 h-10 sm:w-12 sm:h-12 border border-[#f0c2a2] text-center text-lg font-bold rounded-md focus:border-[#e6935b] outline-none bg-transparent"
+              />
+            ))}
+          </div>
+          
+          <div className="flex text-xs font-semibold justify-between mt-2">
+            <button type="button" className="text-gray-600 cursor-pointer hover:text-gray-800" onClick={() => change()}>
+              Change Number
+            </button>
+            <button type='button' className="text-[#d5754d] cursor-pointer hover:text-[#b35f3f]" onClick={() => resendOtp({phone:value})}>
+              Resend OTP
+            </button>
+          </div>
+                                          
+          {/* verify button */}
+          <button 
+            type='submit' 
+            className={`w-full py-3 sm:py-2 mt-2 rounded-lg bg-[#d5754d] hover:bg-[#b35f3f] text-white font-bold shadow-md transition duration-300 text-sm hover:-translate-y-1 ${check ? "cursor-pointer" : "cursor-not-allowed"}`}
+          >
+            Verify OTP
+          </button>
         </div>
+      </form>
+    }
+    
+    {signup &&  
+      <form className="flex flex-col gap-4 p-6 sm:p-8 lg:p-10" onSubmit={handleSubmit(newRegister)} noValidate>
+        {/* head */}
+        <h1 className="text-center font-bold text-xl sm:text-2xl text-[#d5754d]">Firecrackers</h1>
+        
+        {/* enter phone number */}
+        <div className="flex flex-col gap-4">
+          <h1 className="text-center font-bold text-xl sm:text-2xl">Complete Your Profile</h1>
+          <p className="text-xs text-center text-gray-600">Just a few more details to get started</p>
+          
+          {/* error msgs */}
+          {errors.name && (
+            <p className="text-xs w-full px-4 py-2 border border-red-300 bg-red-100/60 rounded-lg text-center">
+              {errors.name.message}
+            </p>
+          )}
+
+          {errors.email && (
+            <p className="text-xs w-full px-4 py-2 border border-red-300 bg-red-100/60 rounded-lg text-center">
+              {errors.email.message}
+            </p>
+          )}
+          
+          {/* name */}
+          <label className="font-medium text-sm" htmlFor="name">Name</label>
+          {/* input */}
+          <div className="border border-[#f0c2a2] rounded-lg flex px-3 gap-2 items-center">
+            <span className="flex items-center pointer-events-none">
+              <FaUser size={18} className="text-gray-400"/>
+            </span>
+            <input 
+              type='text' 
+              id='name' 
+              className="outline-none w-full h-12 sm:h-10 rounded-none text-sm bg-transparent" 
+              placeholder="Enter your full name"
+              {...register('name',{
+                required: {
+                  value: true,
+                  message: 'Enter Your Name',
+                },
+                minLength: {value: 2, message: 'Name must have min 2 letters'},
+                validate: (value) => {
+                  if(/ {2,}/.test(value)) return 'Double spaces are not allowed'
+                }
+              })}
+            />
+          </div>
+
+          {/* email */}
+          <label className="font-medium text-sm" htmlFor="email">Email</label>
+          {/* input */}
+          <div className="border border-[#f0c2a2] rounded-lg flex px-3 gap-2 items-center">
+            <span className="flex items-center pointer-events-none">
+              <MdMail size={18} className="text-gray-400"/>
+            </span>
+            <input 
+              id='email' 
+              type='email' 
+              className="outline-none w-full h-12 sm:h-10 rounded-none text-sm bg-transparent" 
+              placeholder="Enter your email address"
+              {...register('email',{
+                required: {
+                  value: true,
+                  message: 'Enter Your Email'
+                },
+                pattern: {value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Invalid Email Format'}
+              })}
+            />
+          </div>
+          
+          <button 
+            type='submit' 
+            className="w-full py-3 sm:py-2 mt-2 rounded-lg bg-[#d5754d] hover:bg-[#b35f3f] text-white font-bold shadow-md transition duration-300 text-sm hover:-translate-y-1 cursor-pointer"
+          >
+            Create Account
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>
 
         </>
     )

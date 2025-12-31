@@ -40,7 +40,9 @@ const ProductList = () => {
     const getPrds = async() => {
         try{
                 const result = await getProducts()
+                setIsProductLoading(true)
                 setProducts(result)
+                setIsProductLoading(false)
         }
         catch(e){
             console.error('Error Messsage is',e);

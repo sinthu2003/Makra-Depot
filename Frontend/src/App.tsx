@@ -7,7 +7,6 @@ import UserProfile from './components/Users/UserProfile'
 import ProtectedRoute from './components/Auth/ProtectedRoute'
 import IsLogged from './components/Auth/IsLogged'
 import 'react-toastify/dist/ReactToastify.css';
-import { RoleProvider } from './Context/UserRole.context'
 import ProductList from './components/Home/products/ProductList'
 // import ItemList from './components/Home/products/Item/ItemList'
 import Details from './components/Home/products/Item/details'
@@ -27,12 +26,12 @@ import Dashboard from './components/Dashboard/Dashboard'
 function App() {
 
   // season end
-  const seasonEnd = new Date > new Date('2025-12-01')
+  const seasonEnd = new Date > new Date('2028-12-01')
 
   return (
     <>
       <div className='bg-[#fff9e6] dark:bg-gray-900'>
-      <RoleProvider><CountProvider>
+      <CountProvider>
       <BrowserRouter>
         {/* routes */}
         <ScrollToTop />
@@ -75,7 +74,6 @@ function App() {
           }
         </Routes>
       </BrowserRouter></CountProvider>
-      </RoleProvider>
       </div>
     </>
   )

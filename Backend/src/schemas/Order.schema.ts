@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Address, AddressSchema } from './Customer.schema';
+import {Types} from 'mongoose'
 
 @Schema()
 export class OrderItem {
@@ -9,8 +10,19 @@ export class OrderItem {
   @Prop() price: number;
   @Prop() quantity: number;
   @Prop() subtotal: number;
+  @Prop() image: string;
 }
 export const OrderItemSchema = SchemaFactory.createForClass(OrderItem);
+
+@Schema()
+export class PaymentProof {
+  @Prop({ type: Types.ObjectId, auto: true })
+  _id: Types.ObjectId;
+
+  @Prop() file: string;
+  @Prop({default:'Customer Upload'}) type: string;
+}
+export const PaymentProofSchema = SchemaFactory.createForClass(PaymentProof);
 
 @Schema({ timestamps: true,collection:"Orders" })
 export class Order {
@@ -53,6 +65,9 @@ export class Order {
 
   @Prop() internalNotes?: string;
   @Prop() customerNotes?: string;
+
+  @Prop({ type: [PaymentProofSchema], default: [] })
+  paymentProofs: PaymentProof[];
 
   @Prop() couponCode?: string;
   @Prop({ default: 0 }) couponDiscount?: number;

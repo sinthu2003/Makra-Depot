@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards,Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards,Request, Param } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { JwtGuard } from 'src/user/auth/jwt-auth.guard';
 
@@ -26,5 +26,20 @@ export class OrderController {
             code:201,
             data:res
         }
+    }
+
+    @Post(':id/payment-proof')
+    async upload (@Body() data:any,@Param('id') id:any){
+        return this.service.uploadProof(id,data.data)
+    }
+
+    @Post('/del-proof')
+    async del (@Body() data:any){
+        return this.service.delProof(data.id,data.data)
+    }
+
+    @Post('/cancel')
+    async cancel (@Body() data:any){
+        return this.service.cancelOrder(data.id)
     }
 }

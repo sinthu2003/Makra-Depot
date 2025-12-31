@@ -17,8 +17,6 @@ export const AddressSchema = SchemaFactory.createForClass(Address);
 
 @Schema({ timestamps: true ,collection:"Customers"})
 export class Customer {
-  @Prop({ required: true })
-  _id: string;
 
   @Prop({ required: true })
   name: string;
